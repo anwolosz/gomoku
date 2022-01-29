@@ -1,0 +1,15 @@
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+td {
+  width: 30px;
+  height: 30px;
+}
+
+td:hover {
+  background-color: grey;
+}
