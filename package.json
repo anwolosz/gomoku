@@ -1,0 +1,25 @@
+{
+  "name": "socketio-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anwolosz/verona-twist.git"
+  },
+  "author": "Wolosz András",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anwolosz/verona-twist/issues"
+  },
+  "homepage": "https://github.com/anwolosz/verona-twist#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "socket.io": "^4.4.1"
+  }
+}
