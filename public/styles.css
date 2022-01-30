@@ -1,15 +1,39 @@
-table,
-th,
-td {
-  border: 1px solid black;
+table {
+  user-select: none;
+  border: 2px solid black;
   border-collapse: collapse;
+  background: linear-gradient(
+    to bottom left,
+    #c19a6c,
+    #d89d84,
+    #e7b88d,
+    #e6a98b,
+    #d0a373
+  );
 }
 
 td {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 30px;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0) 47%,
+      black 47%,
+      black 53%,
+      rgba(0, 0, 0, 0) 0%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0) 47%,
+      black 47%,
+      black 53%,
+      rgba(0, 0, 0, 0) 47%
+    ),
+    radial-gradient(black 10%, rgba(0, 0, 0, 0) 0%);
 }
 
 td:hover {
-  background-color: grey;
+  background-color: rgba(0, 0, 0, 0.3);
 }
