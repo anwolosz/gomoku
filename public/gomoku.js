@@ -1,5 +1,6 @@
 class Gomoku {
   boardSize = 15;
+  nInARow = 5;
   board;
   activePlayer;
   winner;
@@ -16,7 +17,7 @@ class Gomoku {
     this.winner = null;
   }
 
-  onClick(x, y) {
+  move(x, y) {
     if (this.isLegalMove(x, y)) {
       this.board[y][x] = this.activePlayer;
       if (this.isWin(x, y)) {
@@ -39,92 +40,40 @@ class Gomoku {
     return this.board[y][x] === null;
   }
 
+  isOutOfBounds(x, y) {
+    return x >= 15 || y >= 15 || x < 0 || y < 0;
+  }
+
+  countInRow(x, y, direction) {
+    var i = 0;
+    do {
+      i++;
+      var checkX = x + i * direction.toX;
+      var checkY = y + i * direction.toY;
+    } while (
+      !this.isOutOfBounds(checkX, checkY) &&
+      this.board[checkY][checkX] === this.activePlayer
+    );
+    return i - 1;
+  }
+
   isWin(x, y) {
-    var count = 1;
-    var i = 1;
-    while (
-      x + i < this.boardSize &&
-      this.board[y][x + i] === this.activePlayer
-    ) {
-      count++;
-      i++;
-    }
-    i = 1;
-    while (x - i >= 0 && this.board[y][x - i] === this.activePlayer) {
-      count++;
-      i++;
-    }
-    if (count === 5) {
-      return true;
-    }
-    console.log("Vertical: " + count);
+    const directions = [
+      { toX: 1, toY: 0 },
+      { toX: 0, toY: 1 },
+      { toX: 1, toY: 1 },
+      { toX: 1, toY: -1 },
+    ];
 
-    count = 1;
-    i = 1;
-    while (
-      y + i < this.boardSize &&
-      this.board[y + i][x] === this.activePlayer
-    ) {
-      count++;
-      i++;
+    for (const direction of directions) {
+      const countForward = this.countInRow(x, y, direction);
+      direction.toX *= -1;
+      direction.toY *= -1;
+      const countBackward = this.countInRow(x, y, direction);
+      if (countForward + countBackward + 1 === this.nInARow) {
+        return true;
+      }
     }
-    i = 1;
-    while (y - i >= 0 && this.board[y - i][x] === this.activePlayer) {
-      count++;
-      i++;
-    }
-    if (count === 5) {
-      return true;
-    }
-    console.log("Horizontal: " + count);
-
-    count = 1;
-    i = 1;
-    while (
-      y + i < this.boardSize &&
-      x + i < this.boardSize &&
-      this.board[y + i][x + i] === this.activePlayer
-    ) {
-      count++;
-      i++;
-    }
-    i = 1;
-    while (
-      y - i >= 0 &&
-      x - i >= 0 &&
-      this.board[y - i][x - i] === this.activePlayer
-    ) {
-      count++;
-      i++;
-    }
-    if (count === 5) {
-      return true;
-    }
-    console.log("DiagonalDown: " + count);
-
-    count = 1;
-    i = 1;
-    while (
-      y + i < this.boardSize &&
-      x - i >= 0 &&
-      this.board[y + i][x - i] === this.activePlayer
-    ) {
-      count++;
-      i++;
-    }
-    i = 1;
-    while (
-      y - i >= 0 &&
-      x + i < this.boardSize &&
-      this.board[y - i][x + i] === this.activePlayer
-    ) {
-      count++;
-      i++;
-    }
-    if (count === 5) {
-      return true;
-    }
-
     return false;
   }
 }

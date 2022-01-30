@@ -9,7 +9,7 @@ const app = {
   },
   methods: {
       onClick(x,y) {
-          this.gomoku.onClick(x,y)
+          this.gomoku.move(x,y)
       }
   }
 };
