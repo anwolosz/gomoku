@@ -6,12 +6,13 @@ const app = {
     };
   },
   mounted() {
-    this.gomokuConnection.getMove(this.gomoku);
+    this.gomokuConnection.receiveMove(this.gomoku);
+    this.gomokuConnection.receiveRoomNumber(this.gomoku);
   },
   methods: {
     onClick(x, y) {
       this.gomoku.move(x, y);
-      this.gomokuConnection.sendMove(x, y);
+      this.gomokuConnection.sendMove(this.gomokuConnection.roomNumber, x, y);
     },
   },
 };

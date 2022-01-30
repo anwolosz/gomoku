@@ -1,13 +1,20 @@
 var socket = io();
 
 class GomokuConnection {
-  sendMove(x, y) {
-    socket.emit("sendMove", x, y);
+  roomNumber;
+  sendMove(roomNumber, x, y) {
+    socket.emit("sendMove", this.roomNumber, x, y);
   }
 
-  getMove(gomoku) {
+  receiveMove(gomoku) {
     socket.on("receiveMove", (x, y) => {
       gomoku.move(x, y);
+    });
+  }
+
+  receiveRoomNumber(roomNumber) {
+    socket.on("roomNumber", (roomNumber) => {
+      this.roomNumber = roomNumber;
     });
   }
 }
