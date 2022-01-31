@@ -21,14 +21,19 @@ class Gomoku {
     this.winner = null;
   }
 
-  move(x, y) {
-    if (this.isLegalMove(x, y)) {
+  move(x, y, player) {
+    if (this.isLegalMove(x, y, player)) {
+      console.log("Move is legal!");
       this.board[y][x] = this.activePlayer;
       if (this.isWin(x, y)) {
         this.winner = this.activePlayer;
+        console.log(`End of Game. Winner is ${this.activePlayer}`);
         return;
       }
+      console.log(this.board[0]);
       this.switchPlayer();
+    } else {
+      console.log("Move is illlegal...");
     }
   }
 
@@ -40,18 +45,16 @@ class Gomoku {
     }
   }
 
-  isLegalMove(x, y) {
+  isLegalMove(x, y, player) {
     return (
-      x < this.boardSize &&
-      y < this.boardSize &&
-      x >= 0 &&
-      y >= 0 &&
+      this.activePlayer === player &&
+      !this.isOutOfBounds(x, y) &&
       this.board[y][x] === null
     );
   }
 
   isOutOfBounds(x, y) {
-    return x >= 15 || y >= 15 || x < 0 || y < 0;
+    return x >= this.boardSize || y >= this.boardSize || x < 0 || y < 0;
   }
 
   countInRow(x, y, direction) {
