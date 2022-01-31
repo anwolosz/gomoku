@@ -2,10 +2,11 @@ class Gomoku {
   boardSize = 15;
   nInARow = 5;
   board;
+  players;
   activePlayer;
   winner;
 
-  constructor() {
+  constructor(firstPlayer, secondPlayer) {
     this.board = [];
     for (var i = 0; i < this.boardSize; i++) {
       this.board.push([]);
@@ -13,7 +14,10 @@ class Gomoku {
         this.board[i].push(null);
       }
     }
-    this.activePlayer = "X";
+    this.players = { first: null, second: null };
+    this.players.first = firstPlayer;
+    this.players.second = secondPlayer;
+    this.activePlayer = this.players.first;
     this.winner = null;
   }
 
@@ -29,10 +33,10 @@ class Gomoku {
   }
 
   switchPlayer() {
-    if (this.activePlayer === "X") {
-      this.activePlayer = "Y";
+    if (this.activePlayer === this.players.first) {
+      this.activePlayer = this.players.second;
     } else {
-      this.activePlayer = "X";
+      this.activePlayer = this.players.first;
     }
   }
 

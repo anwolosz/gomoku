@@ -14,21 +14,29 @@ app.get("/", (req, res) => {
 });
 
 var countClient = 0;
+var games = [];
 io.on("connection", (socket) => {
   countClient++;
   const roomNumber = Math.round(countClient / 2);
   socket.join(roomNumber);
   socket.emit("roomNumber", roomNumber);
+  if (countClient % 2 === 1) {
+    games.push(new Gomoku("X", "O"));
+  }
 
-  var game = new Gomoku();
   console.log(`Connected with id: ${socket.id}`);
   socket.on("sendMove", (roomNumber, x, y) => {
-    if (game.isLegalMove(x, y)) {
+    if (games[roomNumber - 1].isLegalMove(x, y)) {
       io.to(roomNumber).emit("receiveMove", x, y);
     }
-    game.move(x, y);
+    games[roomNumber - 1].move(x, y);
+  });
+
+  socket.on("disconnect", () => {
+    console.log(`Disconnect with id: ${socket.id}`);
   });
 });
+
 server.listen(3000, () => {
   console.log("listening on: 3000");
 });
