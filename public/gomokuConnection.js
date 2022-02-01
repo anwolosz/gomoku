@@ -12,9 +12,16 @@ class GomokuConnection {
     });
   }
 
-  receiveRoomNumber(roomNumber) {
+  receiveRoomNumber() {
     socket.on("roomNumber", (roomNumber) => {
       this.roomNumber = roomNumber;
+    });
+  }
+
+  receiveIsFirstPlayer() {
+    socket.on("isFirstPlayer", (isFirstPlayer) => {
+      // this.roomNumber = roomNumber;
+      console.log("You are the first:", isFirstPlayer);
     });
   }
 }

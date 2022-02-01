@@ -22,11 +22,11 @@ io.on("connection", (socket) => {
   socket.join(roomNumber);
   socket.emit("roomNumber", roomNumber);
   if (countClient % 2 === 0) {
-    console.log(io.sockets.adapter.rooms.get(roomNumber));
-    var players = [];
-    for (var client of io.sockets.adapter.rooms.get(roomNumber)) {
-      players.push(client);
-    }
+    var players = Array.from(io.sockets.adapter.rooms.get(roomNumber));
+    console.log(players);
+
+    io.to(players[0]).emit("isFirstPlayer", true);
+    io.to(players[1]).emit("isFirstPlayer", false);
     games.push(new Gomoku(players[0], players[1]));
   }
 

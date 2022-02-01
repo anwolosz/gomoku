@@ -7,7 +7,8 @@ const app = {
   },
   mounted() {
     this.gomokuConnection.receiveMove(this.gomoku);
-    this.gomokuConnection.receiveRoomNumber(this.gomoku);
+    this.gomokuConnection.receiveRoomNumber();
+    this.gomokuConnection.receiveIsFirstPlayer();
   },
   methods: {
     onClick(x, y) {
