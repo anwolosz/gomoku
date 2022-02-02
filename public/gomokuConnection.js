@@ -1,10 +1,10 @@
 var socket = io();
 
 class GomokuConnection {
-  roomNumber;
+  roomId;
   id;
-  sendMove(roomNumber, x, y) {
-    socket.emit("sendMove", this.roomNumber, x, y);
+  sendMove(roomId, x, y) {
+    socket.emit("sendMove", this.roomId, x, y);
   }
 
   receiveMove(gomoku) {
@@ -13,24 +13,21 @@ class GomokuConnection {
     });
   }
 
-  receiveRoomNumber() {
-    socket.on("roomNumber", (roomNumber) => {
+  receiveRoomId() {
+    socket.on("roomId", (roomId) => {
       this.id = socket.id;
-      this.roomNumber = roomNumber;
+      this.roomId = roomId;
     });
   }
 
   receiveIsFirstPlayer(gomoku) {
     socket.on("isFirstPlayer", (isFirstPlayer) => {
       if (isFirstPlayer) {
-        gomoku.players.first = socket.id;
-        gomoku.players.second = "X";
-        gomoku.activePlayer = socket.id;
+        gomoku.setPlayers(socket.id, "X");
       } else {
-        gomoku.players.first = "X";
-        gomoku.players.second = socket.id;
-        gomoku.activePlayer = "X";
+        gomoku.setPlayers("X", socket.id);
       }
+      gomoku.activePlayer = gomoku.players.first;
       console.log("You are the first:", isFirstPlayer);
     });
   }

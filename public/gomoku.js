@@ -1,24 +1,25 @@
 class Gomoku {
   boardSize = 15;
   nInARow = 5;
-  board;
-  players;
-  activePlayer;
-  winner;
+  board = [];
+  players = { first: null, second: null };
+  activePlayer = null;
+  winner = null;
 
   constructor(firstPlayer, secondPlayer) {
-    this.board = [];
     for (var i = 0; i < this.boardSize; i++) {
       this.board.push([]);
       for (var j = 0; j < this.boardSize; j++) {
         this.board[i].push(null);
       }
     }
-    this.players = { first: null, second: null };
+    this.setPlayers(firstPlayer, secondPlayer);
+    this.activePlayer = this.players.first;
+  }
+
+  setPlayers(firstPlayer, secondPlayer) {
     this.players.first = firstPlayer;
     this.players.second = secondPlayer;
-    this.activePlayer = this.players.first;
-    this.winner = null;
   }
 
   move(x, y, player) {
@@ -29,14 +30,16 @@ class Gomoku {
       if (this.isWin(x, y)) {
         this.winner = this.activePlayer;
         console.log(`End of Game. Winner is ${this.activePlayer}`);
-        return;
+        return true;
       }
       console.log(this.board[0]);
       this.switchPlayer();
       console.log("Next player: ", this.activePlayer);
+      return true;
     } else {
       console.log(this.activePlayer);
       console.log("Move is illlegal...");
+      return false;
     }
   }
 

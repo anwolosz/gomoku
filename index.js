@@ -18,11 +18,11 @@ var games = [];
 io.on("connection", (socket) => {
   console.log(`Connected with id: ${socket.id}`);
   countClient++;
-  const roomNumber = Math.round(countClient / 2);
-  socket.join(roomNumber);
-  socket.emit("roomNumber", roomNumber);
+  const roomId = Math.round(countClient / 2);
+  socket.join(roomId);
+  socket.emit("roomId", roomId);
   if (countClient % 2 === 0) {
-    var players = Array.from(io.sockets.adapter.rooms.get(roomNumber));
+    var players = Array.from(io.sockets.adapter.rooms.get(roomId));
     console.log(players);
 
     io.to(players[0]).emit("isFirstPlayer", true);
@@ -30,13 +30,11 @@ io.on("connection", (socket) => {
     games.push(new Gomoku(players[0], players[1]));
   }
 
-  // TODO: Dont allow sendMove if only one player in the room
-  socket.on("sendMove", (roomNumber, x, y) => {
-    if (games[roomNumber - 1].isLegalMove(x, y, socket.id)) {
-      games[roomNumber - 1].move(x, y, socket.id);
+  socket.on("sendMove", (roomId, x, y) => {
+    if (games[roomId - 1].move(x, y, socket.id)) {
       socket
-        .to(roomNumber)
-        .emit("receiveMove", x, y, games[roomNumber - 1].activePlayer);
+        .to(roomId)
+        .emit("receiveMove", x, y, games[roomId - 1].activePlayer);
     }
   });
 

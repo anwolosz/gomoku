@@ -1,13 +1,13 @@
 const app = {
   data() {
     return {
-      gomoku: new Gomoku("X", "Y"),
+      gomoku: new Gomoku(),
       gomokuConnection: new GomokuConnection(),
     };
   },
   mounted() {
     this.gomokuConnection.receiveMove(this.gomoku);
-    this.gomokuConnection.receiveRoomNumber();
+    this.gomokuConnection.receiveRoomId();
     this.gomokuConnection.receiveIsFirstPlayer(this.gomoku);
   },
   methods: {
