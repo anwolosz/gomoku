@@ -2,10 +2,11 @@ class Gomoku {
   boardSize = 15;
   nInARow = 5;
   board;
+  players;
   activePlayer;
   winner;
 
-  constructor() {
+  constructor(firstPlayer, secondPlayer) {
     this.board = [];
     for (var i = 0; i < this.boardSize; i++) {
       this.board.push([]);
@@ -13,35 +14,50 @@ class Gomoku {
         this.board[i].push(null);
       }
     }
-    this.activePlayer = "X";
+    this.players = { first: null, second: null };
+    this.players.first = firstPlayer;
+    this.players.second = secondPlayer;
+    this.activePlayer = this.players.first;
     this.winner = null;
   }
 
-  move(x, y) {
-    if (this.isLegalMove(x, y)) {
+  move(x, y, player) {
+    if (this.isLegalMove(x, y, player)) {
+      console.log("Move is legal!");
+      console.log("Active player: ", this.activePlayer);
       this.board[y][x] = this.activePlayer;
       if (this.isWin(x, y)) {
         this.winner = this.activePlayer;
+        console.log(`End of Game. Winner is ${this.activePlayer}`);
         return;
       }
+      console.log(this.board[0]);
       this.switchPlayer();
+      console.log("Next player: ", this.activePlayer);
+    } else {
+      console.log(this.activePlayer);
+      console.log("Move is illlegal...");
     }
   }
 
   switchPlayer() {
-    if (this.activePlayer === "X") {
-      this.activePlayer = "Y";
+    if (this.activePlayer === this.players.first) {
+      this.activePlayer = this.players.second;
     } else {
-      this.activePlayer = "X";
+      this.activePlayer = this.players.first;
     }
   }
 
-  isLegalMove(x, y) {
-    return this.board[y][x] === null;
+  isLegalMove(x, y, player) {
+    return (
+      this.activePlayer === player &&
+      !this.isOutOfBounds(x, y) &&
+      this.board[y][x] === null
+    );
   }
 
   isOutOfBounds(x, y) {
-    return x >= 15 || y >= 15 || x < 0 || y < 0;
+    return x >= this.boardSize || y >= this.boardSize || x < 0 || y < 0;
   }
 
   countInRow(x, y, direction) {

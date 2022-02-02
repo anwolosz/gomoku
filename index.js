@@ -33,9 +33,11 @@ io.on("connection", (socket) => {
   // TODO: Dont allow sendMove if only one player in the room
   socket.on("sendMove", (roomNumber, x, y) => {
     if (games[roomNumber - 1].isLegalMove(x, y, socket.id)) {
-      io.to(roomNumber).emit("receiveMove", x, y);
+      games[roomNumber - 1].move(x, y, socket.id);
+      socket
+        .to(roomNumber)
+        .emit("receiveMove", x, y, games[roomNumber - 1].activePlayer);
     }
-    games[roomNumber - 1].move(x, y, socket.id);
   });
 
   socket.on("disconnect", () => {

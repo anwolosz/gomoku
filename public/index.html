@@ -12,12 +12,12 @@
   </head>
   <body>
     <div id="app">
-      <!-- {{gomoku}} -->
+      {{gomoku.activePlayer}}
       <table>
         <tr v-for="(row, y) in gomoku.board">
           <td v-for="(cell, x) in row" @click="onClick(x, y)">
             <div v-if="gomoku.board[y][x] !== null">
-              {{(gomoku.board[y][x] === "X") ? "⚪": "⚫"}}
+              {{(gomoku.board[y][x] === gomoku.players.first) ? "⚫": "⚪"}}
             </div>
           </td>
         </tr>
