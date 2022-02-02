@@ -16,9 +16,14 @@
       <table>
         <tr v-for="(row, y) in gomoku.board">
           <td v-for="(cell, x) in row" @click="onClick(x, y)">
-            <div v-if="gomoku.board[y][x] !== null">
-              {{(gomoku.board[y][x] === gomoku.players.first) ? "⚫": "⚪"}}
-            </div>
+            <div
+              class="black stone"
+              v-if="gomoku.board[y][x] === gomoku.players.first"
+            ></div>
+            <div
+              class="white stone"
+              v-if="gomoku.board[y][x] === gomoku.players.second"
+            ></div>
           </td>
         </tr>
       </table>

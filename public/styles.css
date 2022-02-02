@@ -37,3 +37,18 @@ td {
 td:hover {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+.stone {
+  margin: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.black {
+  background: #31373d;
+}
+
+.white {
+  background: #e6e7e8;
+}
