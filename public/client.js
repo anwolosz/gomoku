@@ -6,14 +6,14 @@ const app = {
     };
   },
   mounted() {
+    this.gomokuConnection.onConnect();
     this.gomokuConnection.receiveMove(this.gomoku);
     this.gomokuConnection.receiveRoomId();
     this.gomokuConnection.receiveIsFirstPlayer(this.gomoku);
   },
   methods: {
     onClick(x, y) {
-      this.gomoku.move(x, y, this.gomokuConnection.id);
-      this.gomokuConnection.sendMove(this.gomokuConnection.roomNumber, x, y);
+      this.gomokuConnection.sendMove(this.gomoku, x, y);
     },
   },
 };
