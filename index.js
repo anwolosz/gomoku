@@ -18,18 +18,6 @@ var games = [];
 var gamesRoomName = {};
 io.on("connection", (socket) => {
   console.log(`Connected with id: ${socket.id}`);
-  // countClient++;
-  // const roomId = Math.round(countClient / 2);
-  // socket.join(roomId);
-  // socket.emit("roomId", roomId);
-  // if (countClient % 2 === 0) {
-  //   var players = Array.from(io.sockets.adapter.rooms.get(roomId));
-  //   console.log(players);
-
-  //   io.to(players[0]).emit("isFirstPlayer", true);
-  //   io.to(players[1]).emit("isFirstPlayer", false);
-  //   games.push(new Gomoku(players[0], players[1]));
-  // }
 
   socket.on("createRoom", (roomName) => {
     console.log("Room create: ", roomName);
@@ -69,6 +57,10 @@ io.on("connection", (socket) => {
   socket.on("sendMove", (roomName, x, y) => {
     console.log(roomName);
     console.log(gamesRoomName);
+    if (!(roomName in gamesRoomName)) {
+      console.log("Room not exist!");
+      return;
+    }
     if (gamesRoomName[roomName].move(x, y, socket.id)) {
       socket
         .to(roomName)

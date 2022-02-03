@@ -13,13 +13,15 @@
   <body>
     <div id="app">
       <!-- {{gomoku}} -->
-      {{roomName}}
       <label for="createRoom">Create room: </label>
-      <input type="text" name="createRoom" v-model="roomName" />
+      <input type="text" name="createRoom" v-model="gomokuConnection.roomId" />
       <button @click="onCreateRoom()">Create</button><br />
       <label for="connectRoom">Connect room: </label>
-      <input type="text" name="connectRoom" v-model="connectRoom" />
+      <input type="text" name="connectRoom" v-model="gomokuConnection.roomId" />
       <button @click="onConnectRoom()">connect</button>
+      <h1>{{gomokuConnection.roomId}}</h1>
+      <h2 v-if="gomoku.winner === gomokuConnection.id">You won!</h2>
+      <h2 v-if="gomoku.winner === gomokuConnection.opponent">You lose...</h2>
       <p>Active player: {{gomoku.activePlayer}}</p>
       <table v-if="gomoku !== {}">
         <tr v-for="(row, y) in gomoku.board">

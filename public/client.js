@@ -3,8 +3,6 @@ const app = {
     return {
       gomoku: new Gomoku(),
       gomokuConnection: new GomokuConnection(),
-      roomName: "",
-      connectRoom: "",
     };
   },
   mounted() {
@@ -18,10 +16,10 @@ const app = {
       this.gomokuConnection.sendMove(this.gomoku, x, y);
     },
     onCreateRoom() {
-      this.gomokuConnection.createRoom(this.roomName);
+      this.gomokuConnection.createRoom();
     },
     onConnectRoom() {
-      this.gomokuConnection.connectRoom(this.connectRoom);
+      this.gomokuConnection.connectRoom();
     },
   },
 };
