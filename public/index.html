@@ -12,8 +12,16 @@
   </head>
   <body>
     <div id="app">
+      <!-- {{gomoku}} -->
+      {{roomName}}
+      <label for="createRoom">Create room: </label>
+      <input type="text" name="createRoom" v-model="roomName" />
+      <button @click="onCreateRoom()">Create</button><br />
+      <label for="connectRoom">Connect room: </label>
+      <input type="text" name="connectRoom" v-model="connectRoom" />
+      <button @click="onConnectRoom()">connect</button>
       <p>Active player: {{gomoku.activePlayer}}</p>
-      <table>
+      <table v-if="gomoku !== {}">
         <tr v-for="(row, y) in gomoku.board">
           <td v-for="(cell, x) in row" @click="onClick(x, y)">
             <div

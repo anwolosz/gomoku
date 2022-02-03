@@ -11,6 +11,14 @@ class GomokuConnection {
     });
   }
 
+  createRoom(roomName) {
+    socket.emit("createRoom", roomName);
+  }
+
+  connectRoom(connectRoom) {
+    socket.emit("connectRoom", connectRoom);
+  }
+
   sendMove(gomoku, x, y) {
     if (gomoku.move(x, y, this.id)) {
       socket.emit("sendMove", this.roomId, x, y);
