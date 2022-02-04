@@ -53,6 +53,7 @@ class Gomoku {
 
   isLegalMove(x, y, player) {
     return (
+      this.winner === null &&
       this.activePlayer === player &&
       !this.isOutOfBounds(x, y) &&
       this.board[y][x] === null

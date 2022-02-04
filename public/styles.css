@@ -1,4 +1,9 @@
+body {
+  background-color: #eff0f8;
+}
+
 table {
+  margin: auto;
   user-select: none;
   border: 2px solid black;
   border-collapse: collapse;
@@ -59,6 +64,7 @@ td:hover {
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+  z-index: 2;
 
   display: inline-block;
   background-color: #eff0f8;

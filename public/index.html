@@ -34,7 +34,10 @@
       <div v-if="gomokuConnection.status === 'PLAY'">
         <h2 v-if="gomoku.winner === gomokuConnection.userId">You won!</h2>
         <h2 v-if="gomoku.winner === gomokuConnection.opponent">You lose...</h2>
-        <p>Active player: {{gomoku.activePlayer}}</p>
+        <p>
+          Active player: {{gomoku.activePlayer === gomokuConnection.userId ?
+          "You":"Opponent"}}
+        </p>
         <table v-if="gomoku !== {}">
           <tr v-for="(row, y) in gomoku.board">
             <td v-for="(cell, x) in row" @click="onClick(x, y)">
