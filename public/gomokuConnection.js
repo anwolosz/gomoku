@@ -23,12 +23,12 @@ class GomokuConnection {
 
   sendMove(gomoku, x, y) {
     if (gomoku.move(x, y, this.userId)) {
-      socket.emit("sendMove", this.roomName, x, y);
+      socket.emit("move", this.roomName, x, y);
     }
   }
 
   receiveMove(gomoku) {
-    socket.on("receiveMove", (x, y, player) => {
+    socket.on("opponentMove", (x, y, player) => {
       gomoku.move(x, y, this.opponent);
     });
   }

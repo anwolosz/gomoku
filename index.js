@@ -13,36 +13,37 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-var countClient = 0;
-var games = [];
-var gamesRoomName = {};
+var rooms = {};
 io.on("connection", (socket) => {
   console.log(`Connected with id: ${socket.id}`);
 
   socket.on("createRoom", (roomName) => {
     console.log("Room create: ", roomName);
-    if (roomName in gamesRoomName) {
+    if (roomName in rooms) {
       console.log("Room is already exist");
       socket.emit("error", "Room is already exist");
     } else {
       console.log("Shoudl create room");
-      gamesRoomName[roomName] = socket.id;
+      rooms[roomName] = new Gomoku(socket.id, null);
       socket.join(roomName);
       socket.emit("changeStatus", "WAITING");
     }
-    console.log(gamesRoomName);
+    console.log(rooms);
   });
 
   socket.on("connectRoom", (connectRoom) => {
     console.log("connect room: ", connectRoom);
-    if (connectRoom in gamesRoomName) {
-      if (gamesRoomName[connectRoom] instanceof Gomoku) {
+    if (connectRoom in rooms) {
+      if (
+        rooms[connectRoom].players.first !== null &&
+        rooms[connectRoom].players.second !== null
+      ) {
         console.log("Room is full!");
         socket.emit("error", "Room is full!");
         return;
       }
 
-      if (gamesRoomName[connectRoom] === socket.id) {
+      if (rooms[connectRoom].players.first === socket.id) {
         console.log("You already connected!");
         socket.emit("error", "Your already connected to this room!");
       } else {
@@ -54,7 +55,7 @@ io.on("connection", (socket) => {
 
         io.to(players[0]).emit("start", true);
         io.to(players[1]).emit("start", false);
-        gamesRoomName[connectRoom] = new Gomoku(players[0], players[1]);
+        rooms[connectRoom] = new Gomoku(players[0], players[1]);
       }
     } else {
       console.log("Room not exist");
@@ -62,18 +63,18 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("sendMove", (roomName, x, y) => {
+  socket.on("move", (roomName, x, y) => {
     console.log(roomName);
-    console.log(gamesRoomName);
-    if (!(roomName in gamesRoomName)) {
+    console.log(rooms);
+    if (!(roomName in rooms)) {
       console.log("Room not exist!");
       socket.emit("error", "Room not exist");
       return;
     }
-    if (gamesRoomName[roomName].move(x, y, socket.id)) {
+    if (rooms[roomName].move(x, y, socket.id)) {
       socket
         .to(roomName)
-        .emit("receiveMove", x, y, gamesRoomName[roomName].activePlayer);
+        .emit("opponentMove", x, y, rooms[roomName].activePlayer);
     }
   });
 
