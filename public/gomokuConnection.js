@@ -5,6 +5,7 @@ class GomokuConnection {
   userId;
   opponent = "Opponent";
   status = "SETUP";
+  errorMessage;
 
   onConnect() {
     socket.on("connect", () => {
@@ -48,6 +49,13 @@ class GomokuConnection {
       gomoku.activePlayer = gomoku.players.first;
       this.status = "PLAY";
       console.log("You are the first:", isFirstPlayer);
+    });
+  }
+
+  error() {
+    socket.on("error", (errorMessage) => {
+      console.log("ERROR");
+      this.errorMessage = errorMessage;
     });
   }
 }

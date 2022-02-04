@@ -10,6 +10,7 @@ const app = {
     this.gomokuConnection.receiveMove(this.gomoku);
     this.gomokuConnection.changeStatus();
     this.gomokuConnection.start(this.gomoku);
+    this.gomokuConnection.error();
   },
   methods: {
     onClick(x, y) {

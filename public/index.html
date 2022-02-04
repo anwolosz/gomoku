@@ -25,11 +25,12 @@
         <button class="setupButton" @click="onConnectRoom()">
           Connect Room
         </button>
+        <p>{{gomokuConnection.errorMessage}}</p>
       </div>
-      <h1>{{gomokuConnection.roomName}}</h1>
-      <p v-if="gomokuConnection.status === 'WAITING'">
+      <div v-if="gomokuConnection.status === 'WAITING'">
+        <p>{{gomokuConnection.roomName}}</p>
         Waiting for another player
-      </p>
+      </div>
       <div v-if="gomokuConnection.status === 'PLAY'">
         <h2 v-if="gomoku.winner === gomokuConnection.userId">You won!</h2>
         <h2 v-if="gomoku.winner === gomokuConnection.opponent">You lose...</h2>

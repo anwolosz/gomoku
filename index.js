@@ -23,6 +23,7 @@ io.on("connection", (socket) => {
     console.log("Room create: ", roomName);
     if (roomName in gamesRoomName) {
       console.log("Room is already exist");
+      socket.emit("error", "Room is already exist");
     } else {
       console.log("Shoudl create room");
       gamesRoomName[roomName] = socket.id;
@@ -37,11 +38,13 @@ io.on("connection", (socket) => {
     if (connectRoom in gamesRoomName) {
       if (gamesRoomName[connectRoom] instanceof Gomoku) {
         console.log("Room is full!");
+        socket.emit("error", "Room is full!");
         return;
       }
 
       if (gamesRoomName[connectRoom] === socket.id) {
         console.log("You already connected!");
+        socket.emit("error", "Your already connected to this room!");
       } else {
         console.log("Now Connect!");
         socket.join(connectRoom);
@@ -55,6 +58,7 @@ io.on("connection", (socket) => {
       }
     } else {
       console.log("Room not exist");
+      socket.emit("error", "Room not exist");
     }
   });
 
@@ -63,6 +67,7 @@ io.on("connection", (socket) => {
     console.log(gamesRoomName);
     if (!(roomName in gamesRoomName)) {
       console.log("Room not exist!");
+      socket.emit("error", "Room not exist");
       return;
     }
     if (gamesRoomName[roomName].move(x, y, socket.id)) {
