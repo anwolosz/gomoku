@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
       console.log("Shoudl create room");
       gamesRoomName[roomName] = socket.id;
       socket.join(roomName);
-      socket.emit("roomId", roomName);
+      socket.emit("changeStatus", "WAITING");
     }
     console.log(gamesRoomName);
   });
@@ -41,13 +41,12 @@ io.on("connection", (socket) => {
       } else {
         console.log("Now Connect!");
         socket.join(connectRoom);
-        socket.emit("roomId", connectRoom);
 
         var players = Array.from(io.sockets.adapter.rooms.get(connectRoom));
         console.log(players);
 
-        io.to(players[0]).emit("isFirstPlayer", true);
-        io.to(players[1]).emit("isFirstPlayer", false);
+        io.to(players[0]).emit("start", true);
+        io.to(players[1]).emit("start", false);
         gamesRoomName[connectRoom] = new Gomoku(players[0], players[1]);
       }
     } else {

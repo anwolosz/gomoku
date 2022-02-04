@@ -1,29 +1,28 @@
 var socket = io();
 
 class GomokuConnection {
-  roomId;
-  id;
+  roomName;
+  userId;
   opponent = "Opponent";
   status = "SETUP";
-  connectionEstablished = false;
 
   onConnect() {
     socket.on("connect", () => {
-      this.id = socket.id;
+      this.userId = socket.id;
     });
   }
 
   createRoom() {
-    socket.emit("createRoom", this.roomId);
+    socket.emit("createRoom", this.roomName);
   }
 
   connectRoom() {
-    socket.emit("connectRoom", this.roomId);
+    socket.emit("connectRoom", this.roomName);
   }
 
   sendMove(gomoku, x, y) {
-    if (gomoku.move(x, y, this.id)) {
-      socket.emit("sendMove", this.roomId, x, y);
+    if (gomoku.move(x, y, this.userId)) {
+      socket.emit("sendMove", this.roomName, x, y);
     }
   }
 
@@ -33,15 +32,14 @@ class GomokuConnection {
     });
   }
 
-  receiveRoomId() {
-    socket.on("roomId", (roomId) => {
-      this.status = "WAITING";
-      this.roomId = roomId;
+  changeStatus() {
+    socket.on("changeStatus", (status) => {
+      this.status = status;
     });
   }
 
-  receiveIsFirstPlayer(gomoku) {
-    socket.on("isFirstPlayer", (isFirstPlayer) => {
+  start(gomoku) {
+    socket.on("start", (isFirstPlayer) => {
       if (isFirstPlayer) {
         gomoku.setPlayers(socket.id, this.opponent);
       } else {

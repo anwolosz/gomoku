@@ -18,7 +18,7 @@
           class="setupInput"
           type="text"
           name="createRoom"
-          v-model="gomokuConnection.roomId"
+          v-model="gomokuConnection.roomName"
         />
         <br />
         <button class="setupButton" @click="onCreateRoom()">Create Room</button>
@@ -26,12 +26,12 @@
           Connect Room
         </button>
       </div>
-      <h1>{{gomokuConnection.roomId}}</h1>
+      <h1>{{gomokuConnection.roomName}}</h1>
       <p v-if="gomokuConnection.status === 'WAITING'">
         Waiting for another player
       </p>
       <div v-if="gomokuConnection.status === 'PLAY'">
-        <h2 v-if="gomoku.winner === gomokuConnection.id">You won!</h2>
+        <h2 v-if="gomoku.winner === gomokuConnection.userId">You won!</h2>
         <h2 v-if="gomoku.winner === gomokuConnection.opponent">You lose...</h2>
         <p>Active player: {{gomoku.activePlayer}}</p>
         <table v-if="gomoku !== {}">

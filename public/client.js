@@ -8,8 +8,8 @@ const app = {
   mounted() {
     this.gomokuConnection.onConnect();
     this.gomokuConnection.receiveMove(this.gomoku);
-    this.gomokuConnection.receiveRoomId();
-    this.gomokuConnection.receiveIsFirstPlayer(this.gomoku);
+    this.gomokuConnection.changeStatus();
+    this.gomokuConnection.start(this.gomoku);
   },
   methods: {
     onClick(x, y) {
