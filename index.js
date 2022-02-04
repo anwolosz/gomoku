@@ -35,7 +35,11 @@ io.on("connection", (socket) => {
   socket.on("connectRoom", (connectRoom) => {
     console.log("connect room: ", connectRoom);
     if (connectRoom in gamesRoomName) {
-      // TODO: If room is full
+      if (gamesRoomName[connectRoom] instanceof Gomoku) {
+        console.log("Room is full!");
+        return;
+      }
+
       if (gamesRoomName[connectRoom] === socket.id) {
         console.log("You already connected!");
       } else {
