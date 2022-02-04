@@ -13,31 +13,44 @@
   <body>
     <div id="app">
       <!-- {{gomoku}} -->
-      <div id="setupBox" v-if="!gomokuConnection.connectionEstablished">
-        <input  class="setupInput" type="text" name="createRoom" v-model="gomokuConnection.roomId" />
+      <div id="setupBox" v-if="gomokuConnection.status === 'SETUP'">
+        <input
+          class="setupInput"
+          type="text"
+          name="createRoom"
+          v-model="gomokuConnection.roomId"
+        />
         <br />
         <button class="setupButton" @click="onCreateRoom()">Create Room</button>
-        <button class="setupButton" @click="onConnectRoom()">Connect Room</button>
+        <button class="setupButton" @click="onConnectRoom()">
+          Connect Room
+        </button>
       </div>
       <h1>{{gomokuConnection.roomId}}</h1>
-      <h2 v-if="gomoku.winner === gomokuConnection.id">You won!</h2>
-      <h2 v-if="gomoku.winner === gomokuConnection.opponent">You lose...</h2>
-      <p>Active player: {{gomoku.activePlayer}}</p>
-      <table v-if="gomoku !== {}">
-        <tr v-for="(row, y) in gomoku.board">
-          <td v-for="(cell, x) in row" @click="onClick(x, y)">
-            <div
-              class="black stone"
-              v-if="gomoku.board[y][x] === gomoku.players.first"
-            ></div>
-            <div
-              class="white stone"
-              v-if="gomoku.board[y][x] === gomoku.players.second"
-            ></div>
-          </td>
-        </tr>
-      </table>
+      <p v-if="gomokuConnection.status === 'WAITING'">
+        Waiting for another player
+      </p>
+      <div v-if="gomokuConnection.status === 'PLAY'">
+        <h2 v-if="gomoku.winner === gomokuConnection.id">You won!</h2>
+        <h2 v-if="gomoku.winner === gomokuConnection.opponent">You lose...</h2>
+        <p>Active player: {{gomoku.activePlayer}}</p>
+        <table v-if="gomoku !== {}">
+          <tr v-for="(row, y) in gomoku.board">
+            <td v-for="(cell, x) in row" @click="onClick(x, y)">
+              <div
+                class="black stone"
+                v-if="gomoku.board[y][x] === gomoku.players.first"
+              ></div>
+              <div
+                class="white stone"
+                v-if="gomoku.board[y][x] === gomoku.players.second"
+              ></div>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
+
     <script src="/gomoku.js"></script>
     <script src="/gomokuConnection.js"></script>
     <script src="/client.js"></script>

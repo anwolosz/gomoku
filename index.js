@@ -35,6 +35,7 @@ io.on("connection", (socket) => {
   socket.on("connectRoom", (connectRoom) => {
     console.log("connect room: ", connectRoom);
     if (connectRoom in gamesRoomName) {
+      // TODO: If room is full
       if (gamesRoomName[connectRoom] === socket.id) {
         console.log("You already connected!");
       } else {

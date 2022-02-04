@@ -4,6 +4,7 @@ class GomokuConnection {
   roomId;
   id;
   opponent = "Opponent";
+  status = "SETUP";
   connectionEstablished = false;
 
   onConnect() {
@@ -34,6 +35,7 @@ class GomokuConnection {
 
   receiveRoomId() {
     socket.on("roomId", (roomId) => {
+      this.status = "WAITING";
       this.roomId = roomId;
     });
   }
@@ -46,7 +48,7 @@ class GomokuConnection {
         gomoku.setPlayers(this.opponent, socket.id);
       }
       gomoku.activePlayer = gomoku.players.first;
-      this.connectionEstablished = true;
+      this.status = "PLAY";
       console.log("You are the first:", isFirstPlayer);
     });
   }
