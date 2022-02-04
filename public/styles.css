@@ -39,6 +39,11 @@ td {
     radial-gradient(black 10%, rgba(0, 0, 0, 0) 0%);
 }
 
+.lastMove {
+  box-shadow: 0px 0px 10px #3844e5;
+  border-radius: 50%;
+}
+
 td:hover {
   background-color: rgba(0, 0, 0, 0.3);
 }

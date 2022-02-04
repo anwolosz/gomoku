@@ -40,7 +40,11 @@
         </p>
         <table v-if="gomoku !== {}">
           <tr v-for="(row, y) in gomoku.board">
-            <td v-for="(cell, x) in row" @click="onClick(x, y)">
+            <td
+              v-for="(cell, x) in row"
+              @click="onClick(x, y)"
+              :class="y === gomoku.lastMove[0] && x === gomoku.lastMove[1] ? 'lastMove' : ''"
+            >
               <div
                 class="black stone"
                 v-if="gomoku.board[y][x] === gomoku.players.first"
@@ -49,6 +53,7 @@
                 class="white stone"
                 v-if="gomoku.board[y][x] === gomoku.players.second"
               ></div>
+              {{}}
             </td>
           </tr>
         </table>

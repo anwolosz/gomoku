@@ -5,6 +5,7 @@ class Gomoku {
   players = { first: null, second: null };
   activePlayer = null;
   winner = null;
+  lastMove = [null, null];
 
   constructor(firstPlayer, secondPlayer) {
     for (var i = 0; i < this.boardSize; i++) {
@@ -27,6 +28,7 @@ class Gomoku {
       console.log("Move is legal!");
       console.log("Active player: ", this.activePlayer);
       this.board[y][x] = this.activePlayer;
+      this.lastMove = [y, x];
       if (this.isWin(x, y)) {
         this.winner = this.activePlayer;
         console.log(`End of Game. Winner is ${this.activePlayer}`);
