@@ -17,14 +17,20 @@ var rooms = {};
 io.on("connection", (socket) => {
   console.log(`Connected with id: ${socket.id}`);
 
-  socket.on("createRoom", (roomName) => {
+  socket.on("createRoom", (roomName, firstPlayer) => {
     console.log("Room create: ", roomName);
+    console.log("FirstPlayer: ", firstPlayer);
     if (roomName in rooms) {
       console.log("Room is already exist");
       socket.emit("error", "Room is already exist");
     } else {
-      console.log("Shoudl create room");
-      rooms[roomName] = new Gomoku(socket.id, null);
+      console.log("Should create room");
+
+      if (firstPlayer === "CREATOR") {
+        rooms[roomName] = new Gomoku(socket.id, null);
+      } else {
+        rooms[roomName] = new Gomoku(null, socket.id);
+      }
       socket.join(roomName);
       socket.emit("changeStatus", "WAITING");
     }
@@ -53,9 +59,16 @@ io.on("connection", (socket) => {
         var players = Array.from(io.sockets.adapter.rooms.get(connectRoom));
         console.log(players);
 
-        io.to(players[0]).emit("start", true);
-        io.to(players[1]).emit("start", false);
-        rooms[connectRoom] = new Gomoku(players[0], players[1]);
+        if (rooms[connectRoom].players.first === null) {
+          io.to(players[0]).emit("start", false);
+          io.to(players[1]).emit("start", true);
+          rooms[connectRoom].setPlayers(players[1], players[0]);
+        }
+        if (rooms[connectRoom].players.second === null) {
+          io.to(players[0]).emit("start", true);
+          io.to(players[1]).emit("start", false);
+          rooms[connectRoom].setPlayers(players[0], players[1]);
+        }
       }
     } else {
       console.log("Room not exist");

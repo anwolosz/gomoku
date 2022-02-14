@@ -23,8 +23,30 @@
         <br />
         <button class="setupButton" @click="onCreateRoom()">Create Room</button>
         <button class="setupButton" @click="onConnectRoom()">
-          Connect Room
-        </button>
+          Connect Room</button
+        ><br />
+        <div
+          class="setupSwitch"
+          :class="gomokuConnection.firstPlayer === 'CREATOR' ? 'selected' : ''"
+          @click="gomokuConnection.firstPlayer = 'CREATOR'"
+        >
+          <div class="black stone"></div>
+        </div>
+        <div
+          class="setupSwitch"
+          :class="gomokuConnection.firstPlayer === 'RANDOM' ? 'selected' : ''"
+          @click="gomokuConnection.firstPlayer = 'RANDOM'"
+        >
+          <div class="multicolor stone"></div>
+        </div>
+        <div
+          class="setupSwitch"
+          :class="gomokuConnection.firstPlayer === 'OPPONENT' ? 'selected' : ''"
+          @click="gomokuConnection.firstPlayer = 'OPPONENT'"
+        >
+          <div class="white stone"></div>
+        </div>
+
         <p>{{gomokuConnection.errorMessage}}</p>
       </div>
       <div v-if="gomokuConnection.status === 'WAITING'">

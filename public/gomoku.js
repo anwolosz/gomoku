@@ -21,6 +21,7 @@ class Gomoku {
   setPlayers(firstPlayer, secondPlayer) {
     this.players.first = firstPlayer;
     this.players.second = secondPlayer;
+    this.activePlayer = this.players.first;
   }
 
   move(x, y, player) {

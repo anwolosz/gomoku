@@ -63,6 +63,10 @@ td:hover {
   background: #e6e7e8;
 }
 
+.multicolor {
+  background: linear-gradient(to right, #31373d 50%, #e6e7e8 0%);
+}
+
 #setupBox {
   position: absolute;
   top: 50%;
@@ -116,4 +120,15 @@ td:hover {
 .setupButton:active {
   transition: 0s;
   background-color: #ff9a57;
+}
+
+.setupSwitch {
+  display: inline-block;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  width: 32%;
+  background-color: #ff9100;
+}
+
+.selected {
+  background-color: #ff6600;
 }

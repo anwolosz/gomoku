@@ -5,6 +5,7 @@ class GomokuConnection {
   userId;
   opponent = "Opponent";
   status = "SETUP";
+  firstPlayer = "RANDOM";
   errorMessage;
 
   onConnect() {
@@ -14,7 +15,15 @@ class GomokuConnection {
   }
 
   createRoom() {
-    socket.emit("createRoom", this.roomName);
+    if (this.firstPlayer === "RANDOM") {
+      if (Math.random() < 0.5) {
+        this.firstPlayer = "CREATOR";
+      } else {
+        this.firstPlayer = "OPPONENT";
+      }
+    }
+    console.log(this.firstPlayer);
+    socket.emit("createRoom", this.roomName, this.firstPlayer);
   }
 
   connectRoom() {
@@ -46,7 +55,6 @@ class GomokuConnection {
       } else {
         gomoku.setPlayers(this.opponent, socket.id);
       }
-      gomoku.activePlayer = gomoku.players.first;
       this.status = "PLAY";
       console.log("You are the first:", isFirstPlayer);
     });
