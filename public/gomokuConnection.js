@@ -55,6 +55,7 @@ class GomokuConnection {
       } else {
         gomoku.setPlayers(this.opponent, socket.id);
       }
+      gomoku.countDown();
       this.status = "PLAY";
       console.log("You are the first:", isFirstPlayer);
     });

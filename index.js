@@ -41,15 +41,15 @@ io.on("connection", (socket) => {
     console.log("connect room: ", connectRoom);
     if (connectRoom in rooms) {
       if (
-        rooms[connectRoom].players.first !== null &&
-        rooms[connectRoom].players.second !== null
+        rooms[connectRoom].players.first.id !== null &&
+        rooms[connectRoom].players.second.id !== null
       ) {
         console.log("Room is full!");
         socket.emit("error", "Room is full!");
         return;
       }
 
-      if (rooms[connectRoom].players.first === socket.id) {
+      if (rooms[connectRoom].players.first.id === socket.id) {
         console.log("You already connected!");
         socket.emit("error", "Your already connected to this room!");
       } else {
@@ -59,15 +59,17 @@ io.on("connection", (socket) => {
         var players = Array.from(io.sockets.adapter.rooms.get(connectRoom));
         console.log(players);
 
-        if (rooms[connectRoom].players.first === null) {
+        if (rooms[connectRoom].players.first.id === null) {
           io.to(players[0]).emit("start", false);
           io.to(players[1]).emit("start", true);
           rooms[connectRoom].setPlayers(players[1], players[0]);
+          rooms[connectRoom].countDown();
         }
-        if (rooms[connectRoom].players.second === null) {
+        if (rooms[connectRoom].players.second.id === null) {
           io.to(players[0]).emit("start", true);
           io.to(players[1]).emit("start", false);
           rooms[connectRoom].setPlayers(players[0], players[1]);
+          rooms[connectRoom].countDown();
         }
       }
     } else {

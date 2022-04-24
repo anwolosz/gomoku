@@ -12,7 +12,7 @@
   </head>
   <body>
     <div id="app">
-      <!-- {{gomoku}} -->
+      {{gomoku.players}}
       <div id="setupBox" v-if="gomokuConnection.status === 'SETUP'">
         <input
           class="setupInput"
@@ -69,11 +69,11 @@
             >
               <div
                 class="black stone"
-                v-if="gomoku.board[y][x] === gomoku.players.first"
+                v-if="gomoku.board[y][x] === gomoku.players.first.id"
               ></div>
               <div
                 class="white stone"
-                v-if="gomoku.board[y][x] === gomoku.players.second"
+                v-if="gomoku.board[y][x] === gomoku.players.second.id"
               ></div>
               {{}}
             </td>

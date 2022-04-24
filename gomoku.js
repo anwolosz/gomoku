@@ -2,12 +2,12 @@ class Gomoku {
   boardSize = 15;
   nInARow = 5;
   board = [];
-  players = { first: null, second: null };
+  players = { first: { id: null, timer: 10 }, second: { id: null, timer: 10 } };
   activePlayer = null;
   winner = null;
   lastMove = [null, null];
 
-  constructor(firstPlayer, secondPlayer) {
+  constructor(firstPlayer = null, secondPlayer = null) {
     for (var i = 0; i < this.boardSize; i++) {
       this.board.push([]);
       for (var j = 0; j < this.boardSize; j++) {
@@ -15,13 +15,28 @@ class Gomoku {
       }
     }
     this.setPlayers(firstPlayer, secondPlayer);
-    this.activePlayer = this.players.first;
+    this.activePlayer = this.players.first.id;
+  }
+
+  countDown() {
+    var counter = setInterval(() => {
+      if (this.activePlayer != this.players.first.id) {
+        this.players.first.timer--;
+      } else {
+        this.players.second.timer--;
+      }
+      console.log(this.players);
+    }, 1000);
+    // // while (timer>0)
+    // // {
+    // //   timer--;
+    // // }
   }
 
   setPlayers(firstPlayer, secondPlayer) {
-    this.players.first = firstPlayer;
-    this.players.second = secondPlayer;
-    this.activePlayer = this.players.first;
+    this.players.first.id = firstPlayer;
+    this.players.second.id = secondPlayer;
+    this.activePlayer = this.players.first.id;
   }
 
   move(x, y, player) {
@@ -47,10 +62,10 @@ class Gomoku {
   }
 
   switchPlayer() {
-    if (this.activePlayer === this.players.first) {
-      this.activePlayer = this.players.second;
+    if (this.activePlayer === this.players.first.id) {
+      this.activePlayer = this.players.second.id;
     } else {
-      this.activePlayer = this.players.first;
+      this.activePlayer = this.players.first.id;
     }
   }
 
