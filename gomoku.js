@@ -20,7 +20,7 @@ class Gomoku {
 
   countDown() {
     var counter = setInterval(() => {
-      if (this.activePlayer != this.players.first.id) {
+      if (this.activePlayer === this.players.first.id) {
         this.players.first.timer--;
       } else {
         this.players.second.timer--;

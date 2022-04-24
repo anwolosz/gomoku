@@ -48,25 +48,41 @@
 
         <p>{{gomokuConnection.errorMessage}}</p>
       </div>
-      <div v-if="gomokuConnection.status === 'WAITING'">
-        <p>{{gomokuConnection.roomName}}</p>
-        Waiting for another player
+
+      <div
+        v-if="gomokuConnection.status === 'PLAY' || gomokuConnection.status === 'WAITING'"
+      >
+        <div class="roomName">{{gomokuConnection.roomName}}</div>
+        <div class="playerPanel">
+          <div
+            :class="gomokuConnection.userId === gomoku.players.first.id ? 'black stone' : 'white stone'"
+          ></div>
+          <p>
+            You
+            <b>
+              ( {{gomokuConnection.userId === gomoku.players.first.id ?
+              gomoku.players.first.timer : gomoku.players.second.timer}} )
+            </b>
+          </p>
+          <br />
+          <p>
+            <i v-if="gomokuConnection.status === 'WAITING'">
+              Waiting for another player. <br />
+              Invite someone with the room name:
+              <b>{{gomokuConnection.roomName}}</b>
+            </i>
+            <i v-if="gomoku.winner === null">
+              {{gomoku.activePlayer === gomokuConnection.userId ? "Your turn." :
+              "Waiting for opponent."}}
+            </i>
+            <i v-if="gomoku.winner === gomokuConnection.userId">You won!</i>
+            <i v-if="gomoku.winner === gomokuConnection.opponent">
+              You lose...
+            </i>
+          </p>
+        </div>
       </div>
       <div v-if="gomokuConnection.status === 'PLAY'">
-        <h2 v-if="gomoku.winner === gomokuConnection.userId">You won!</h2>
-        <h2 v-if="gomoku.winner === gomokuConnection.opponent">You lose...</h2>
-        <p>
-          Active player: {{gomoku.activePlayer === gomokuConnection.userId ?
-          "You":"Opponent"}}
-        </p>
-        <p>
-          Your time: {{gomokuConnection.userId === gomoku.players.first.id ?
-          gomoku.players.first.timer : gomoku.players.second.timer}}
-        </p>
-        <p>
-          Opponent time: {{gomokuConnection.userId !== gomoku.players.first.id ?
-          gomoku.players.first.timer : gomoku.players.second.timer}}
-        </p>
         <table v-if="gomoku !== {}">
           <tr v-for="(row, y) in gomoku.board">
             <td
@@ -86,10 +102,18 @@
             </td>
           </tr>
         </table>
-        <p>
-          Opponent time: {{gomokuConnection.userId !== gomoku.players.first.id ?
-          gomoku.players.first.timer : gomoku.players.second.timer}}
-        </p>
+        <div class="playerPanel">
+          <div
+            :class="gomokuConnection.userId === gomoku.players.first.id ? 'white stone' : 'black stone'"
+          ></div>
+          <p>
+            You
+            <b>
+              ( {{gomokuConnection.userId !== gomoku.players.first.id ?
+              gomoku.players.first.timer : gomoku.players.second.timer}} )
+            </b>
+          </p>
+        </div>
       </div>
     </div>
 
