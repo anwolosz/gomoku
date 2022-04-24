@@ -12,7 +12,6 @@
   </head>
   <body>
     <div id="app">
-      {{gomoku.players}}
       <div id="setupBox" v-if="gomokuConnection.status === 'SETUP'">
         <input
           class="setupInput"
@@ -60,6 +59,14 @@
           Active player: {{gomoku.activePlayer === gomokuConnection.userId ?
           "You":"Opponent"}}
         </p>
+        <p>
+          Your time: {{gomokuConnection.userId === gomoku.players.first.id ?
+          gomoku.players.first.timer : gomoku.players.second.timer}}
+        </p>
+        <p>
+          Opponent time: {{gomokuConnection.userId !== gomoku.players.first.id ?
+          gomoku.players.first.timer : gomoku.players.second.timer}}
+        </p>
         <table v-if="gomoku !== {}">
           <tr v-for="(row, y) in gomoku.board">
             <td
@@ -79,6 +86,10 @@
             </td>
           </tr>
         </table>
+        <p>
+          Opponent time: {{gomokuConnection.userId !== gomoku.players.first.id ?
+          gomoku.players.first.timer : gomoku.players.second.timer}}
+        </p>
       </div>
     </div>
 

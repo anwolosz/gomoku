@@ -25,12 +25,21 @@ class Gomoku {
       } else {
         this.players.second.timer--;
       }
+
+      if (this.players.first.timer <= 0) {
+        this.winner = this.players.second.id;
+        clearInterval(counter);
+      }
+      if (this.players.second.timer <= 0) {
+        this.winner = this.players.first.id;
+        clearInterval(counter);
+      }
+      if (this.winner !== null) {
+        clearInterval(counter);
+      }
+
       console.log(this.players);
     }, 1000);
-    // // while (timer>0)
-    // // {
-    // //   timer--;
-    // // }
   }
 
   setPlayers(firstPlayer, secondPlayer) {
