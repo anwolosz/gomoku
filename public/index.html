@@ -12,7 +12,6 @@
   </head>
   <body>
     <div id="app">
-      {{gomoku.maxTime}}
       <div id="setupBox" v-if="gomokuConnection.status === 'SETUP'">
         <input
           class="setupInput"
@@ -46,6 +45,7 @@
         >
           <div class="white stone"></div>
         </div>
+        <input type="number" class="setupSwitch" v-model="gomoku.maxTime" />
 
         <p>{{gomokuConnection.errorMessage}}</p>
       </div>

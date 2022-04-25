@@ -22,11 +22,10 @@ class GomokuConnection {
         this.firstPlayer = "OPPONENT";
       }
     }
-    gomoku.maxTime = 1230;
-    gomoku.players.first.timer = 1230;
-    gomoku.players.second.timer = 1230;
+    gomoku.players.first.timer = gomoku.maxTime;
+    gomoku.players.second.timer = gomoku.maxTime;
     console.log(this.firstPlayer);
-    socket.emit("createRoom", this.roomName, this.firstPlayer, 1230);
+    socket.emit("createRoom", this.roomName, this.firstPlayer, gomoku.maxTime);
   }
 
   connectRoom() {
