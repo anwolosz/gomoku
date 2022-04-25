@@ -55,13 +55,14 @@
         <div class="roomName">{{gomokuConnection.roomName}}</div>
         <div class="playerPanel">
           <div
-            :class="gomokuConnection.userId === gomoku.players.first.id ? 'black stone' : 'white stone'"
+            :class="gomokuConnection.userId === gomoku.players.first.id || gomokuConnection.firstPlayer === 'CREATOR' ? 'black stone' : 'white stone'"
           ></div>
           <p>
             You
             <b>
               ( {{gomokuConnection.userId === gomoku.players.first.id ?
-              gomoku.formatTime(gomoku.players.first.timer)  : gomoku.formatTime(gomoku.players.second.timer)}} )
+              gomoku.formatTime(gomoku.players.first.timer) :
+              gomoku.formatTime(gomoku.players.second.timer)}} )
             </b>
           </p>
           <br />
@@ -110,10 +111,11 @@
             :class="gomokuConnection.userId === gomoku.players.first.id ? 'white stone' : 'black stone'"
           ></div>
           <p>
-            You
+            Opponent
             <b>
               ( {{gomokuConnection.userId !== gomoku.players.first.id ?
-                gomoku.formatTime(gomoku.players.first.timer)  : gomoku.formatTime(gomoku.players.second.timer)}} )
+              gomoku.formatTime(gomoku.players.first.timer) :
+              gomoku.formatTime(gomoku.players.second.timer)}} )
             </b>
           </p>
         </div>
