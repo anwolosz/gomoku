@@ -3,7 +3,7 @@ body {
   background-color: #eff0f8;
 }
 
-table {
+.board {
   margin: auto;
   user-select: none;
   border: 2px solid black;
@@ -19,9 +19,12 @@ table {
 }
 
 .tableField {
-  width: 40px;
+  /* width: 40px;
   height: 40px;
-  min-width: 40px;
+  min-width: 40px; */
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
   text-align: center;
   font-size: 30px;
   background: linear-gradient(
@@ -198,4 +201,19 @@ table {
 .setupTimer:focus {
   border: 2px solid #3844e5;
   background-color: #cecaf4;
+}
+
+.notation {
+  background-color: rgb(246, 248, 255);
+  border-collapse: collapse;
+  margin: auto;
+  width: 300px;
+  height: 100px;
+  overflow-y: scroll;
+  display: block;
+}
+
+.notation td {
+  width: 100px;
+  text-align: center;
 }
