@@ -18,7 +18,7 @@ table {
   );
 }
 
-td {
+.tableField {
   width: 40px;
   height: 40px;
   min-width: 40px;
@@ -41,12 +41,26 @@ td {
     radial-gradient(black 10%, rgba(0, 0, 0, 0) 0%);
 }
 
+.tableIndex {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+
+.tableIndexColumn {
+  border-right: 2px solid black;
+}
+
+.tableIndexRow {
+  border-top: 2px solid black;
+}
+
 .lastMove {
   box-shadow: 0px 0px 10px #3844e5;
   border-radius: 50%;
 }
 
-td:hover {
+.tableField:hover {
   background-color: rgba(0, 0, 0, 0.3);
 }
 

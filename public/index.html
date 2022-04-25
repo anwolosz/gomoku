@@ -45,7 +45,12 @@
         >
           <div class="white stone"></div>
         </div>
-        <input type="number" class="setupTimer" v-model="gomoku.maxTime" placeholder="Seconds" />
+        <input
+          type="number"
+          class="setupTimer"
+          v-model="gomoku.maxTime"
+          placeholder="Seconds"
+        />
 
         <p>{{gomokuConnection.errorMessage}}</p>
       </div>
@@ -89,9 +94,13 @@
       <div v-if="gomokuConnection.status === 'PLAY'">
         <table v-if="gomoku !== {}">
           <tr v-for="(row, y) in gomoku.board">
+            <td class="tableIndex tableIndexColumn">
+              {{gomoku.boardSize - y}}
+            </td>
             <td
               v-for="(cell, x) in row"
               @click="onClick(x, y)"
+              class="tableField"
               :class="[y === gomoku.lastMove[0] && x === gomoku.lastMove[1] ? 'lastMove' : '',
               gomoku.isInWinLine(x, y) ? 'inWinLine': '']"
             >
@@ -103,7 +112,12 @@
                 class="white stone"
                 v-if="gomoku.board[y][x] === gomoku.players.second.id"
               ></div>
-              {{}}
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="tableIndex tableIndexRow" v-for="n in gomoku.boardSize">
+              {{String.fromCharCode("A".charCodeAt(0) + n - 1)}}
             </td>
           </tr>
         </table>
