@@ -14,7 +14,7 @@ class GomokuConnection {
     });
   }
 
-  createRoom() {
+  createRoom(gomoku) {
     if (this.firstPlayer === "RANDOM") {
       if (Math.random() < 0.5) {
         this.firstPlayer = "CREATOR";
@@ -22,8 +22,11 @@ class GomokuConnection {
         this.firstPlayer = "OPPONENT";
       }
     }
+    gomoku.maxTime = 1230;
+    gomoku.players.first.timer = 1230;
+    gomoku.players.second.timer = 1230;
     console.log(this.firstPlayer);
-    socket.emit("createRoom", this.roomName, this.firstPlayer);
+    socket.emit("createRoom", this.roomName, this.firstPlayer, 1230);
   }
 
   connectRoom() {
@@ -49,7 +52,11 @@ class GomokuConnection {
   }
 
   start(gomoku) {
-    socket.on("start", (isFirstPlayer) => {
+    socket.on("start", (isFirstPlayer, maxTime) => {
+      console.log(maxTime);
+      gomoku.maxTime = maxTime;
+      gomoku.players.first.timer = maxTime;
+      gomoku.players.second.timer = maxTime;
       if (isFirstPlayer) {
         gomoku.setPlayers(socket.id, this.opponent);
       } else {

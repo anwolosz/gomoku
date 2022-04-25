@@ -17,7 +17,7 @@ var rooms = {};
 io.on("connection", (socket) => {
   console.log(`Connected with id: ${socket.id}`);
 
-  socket.on("createRoom", (roomName, firstPlayer) => {
+  socket.on("createRoom", (roomName, firstPlayer, maxTime) => {
     console.log("Room create: ", roomName);
     console.log("FirstPlayer: ", firstPlayer);
     if (roomName in rooms) {
@@ -31,7 +31,11 @@ io.on("connection", (socket) => {
       } else {
         rooms[roomName] = new Gomoku(null, socket.id);
       }
+      rooms[roomName].maxTime = maxTime;
+      rooms[roomName].players.first.timer = maxTime;
+      rooms[roomName].players.second.timer = maxTime;
       socket.join(roomName);
+      console.log(rooms[roomName]);
       socket.emit("changeStatus", "WAITING");
     }
     console.log(rooms);
@@ -60,13 +64,13 @@ io.on("connection", (socket) => {
         console.log(players);
 
         if (rooms[connectRoom].players.first.id === null) {
-          io.to(players[0]).emit("start", false);
-          io.to(players[1]).emit("start", true);
+          io.to(players[0]).emit("start", false, rooms[connectRoom].maxTime);
+          io.to(players[1]).emit("start", true, rooms[connectRoom].maxTime);
           rooms[connectRoom].setPlayers(players[1], players[0]);
         }
         if (rooms[connectRoom].players.second.id === null) {
-          io.to(players[0]).emit("start", true);
-          io.to(players[1]).emit("start", false);
+          io.to(players[0]).emit("start", true, rooms[connectRoom].maxTime);
+          io.to(players[1]).emit("start", false, rooms[connectRoom].maxTime);
           rooms[connectRoom].setPlayers(players[0], players[1]);
         }
         rooms[connectRoom].countDown();

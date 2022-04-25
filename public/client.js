@@ -17,7 +17,7 @@ const app = {
       this.gomokuConnection.sendMove(this.gomoku, x, y);
     },
     onCreateRoom() {
-      this.gomokuConnection.createRoom();
+      this.gomokuConnection.createRoom(this.gomoku);
     },
     onConnectRoom() {
       this.gomokuConnection.connectRoom();
