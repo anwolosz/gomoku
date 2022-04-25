@@ -61,7 +61,7 @@
             You
             <b>
               ( {{gomokuConnection.userId === gomoku.players.first.id ?
-              gomoku.players.first.timer : gomoku.players.second.timer}} )
+              gomoku.formatTime(gomoku.players.first.timer)  : gomoku.formatTime(gomoku.players.second.timer)}} )
             </b>
           </p>
           <br />
@@ -113,7 +113,7 @@
             You
             <b>
               ( {{gomokuConnection.userId !== gomoku.players.first.id ?
-              gomoku.players.first.timer : gomoku.players.second.timer}} )
+                gomoku.formatTime(gomoku.players.first.timer)  : gomoku.formatTime(gomoku.players.second.timer)}} )
             </b>
           </p>
         </div>

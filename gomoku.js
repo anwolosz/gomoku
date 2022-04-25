@@ -2,7 +2,7 @@ class Gomoku {
   boardSize = 15;
   nInARow = 5;
   board = [];
-  players = { first: { id: null, timer: 10 }, second: { id: null, timer: 10 } };
+  players = { first: { id: null, timer: 10*60 }, second: { id: null, timer: 10*60 } };
   activePlayer = null;
   winner = null;
   lastMove = [null, null];
@@ -138,6 +138,10 @@ class Gomoku {
       }
     }
     return false;
+  }
+
+  formatTime(timer) {
+    return Math.floor(timer / 60) + ":" + (timer % 60);
   }
 }
 
