@@ -170,3 +170,18 @@ td:hover {
   box-shadow: 0px 0px 10px #ff6600;
   border-radius: 50%;
 }
+
+.setupTimer {
+  outline: none;
+  border: 2px dotted #3844e5;
+  transition: 0.2s;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  background-color: rgb(246, 248, 255);
+}
+
+.setupTimer:focus {
+  border: 2px solid #3844e5;
+  background-color: #cecaf4;
+}

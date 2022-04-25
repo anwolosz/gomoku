@@ -20,7 +20,9 @@ io.on("connection", (socket) => {
   socket.on("createRoom", (roomName, firstPlayer, maxTime) => {
     console.log("Room create: ", roomName);
     console.log("FirstPlayer: ", firstPlayer);
-    if (roomName in rooms) {
+    if (!Number.isInteger(maxTime) || maxTime < 60 || maxTime > 600) {
+      socket.emit("error", "Time should be between 60 and 600");
+    } else if (roomName in rooms) {
       console.log("Room is already exist");
       socket.emit("error", "Room is already exist");
     } else {
