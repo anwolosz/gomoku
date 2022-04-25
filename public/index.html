@@ -71,7 +71,9 @@
               Invite someone with the room name:
               <b>{{gomokuConnection.roomName}}</b>
             </i>
-            <i v-if="gomoku.winner === null">
+            <i
+              v-if="gomokuConnection.status === 'PLAY' && gomoku.winner === null"
+            >
               {{gomoku.activePlayer === gomokuConnection.userId ? "Your turn." :
               "Waiting for opponent."}}
             </i>
@@ -88,7 +90,8 @@
             <td
               v-for="(cell, x) in row"
               @click="onClick(x, y)"
-              :class="y === gomoku.lastMove[0] && x === gomoku.lastMove[1] ? 'lastMove' : ''"
+              :class="[y === gomoku.lastMove[0] && x === gomoku.lastMove[1] ? 'lastMove' : '',
+              gomoku.isInWinLine(x, y) ? 'inWinLine': '']"
             >
               <div
                 class="black stone"

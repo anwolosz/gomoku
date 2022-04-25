@@ -6,6 +6,7 @@ class Gomoku {
   activePlayer = null;
   winner = null;
   lastMove = [null, null];
+  winLine = [];
 
   constructor(firstPlayer = null, secondPlayer = null) {
     for (var i = 0; i < this.boardSize; i++) {
@@ -91,17 +92,20 @@ class Gomoku {
     return x >= this.boardSize || y >= this.boardSize || x < 0 || y < 0;
   }
 
-  countInRow(x, y, direction) {
+  getInRow(x, y, direction) {
+    var rowElems = [];
     var i = 0;
     do {
       i++;
       var checkX = x + i * direction.toX;
       var checkY = y + i * direction.toY;
+      rowElems.push([checkX, checkY]);
     } while (
       !this.isOutOfBounds(checkX, checkY) &&
       this.board[checkY][checkX] === this.activePlayer
     );
-    return i - 1;
+    rowElems.pop();
+    return rowElems;
   }
 
   isWin(x, y) {
@@ -113,11 +117,23 @@ class Gomoku {
     ];
 
     for (const direction of directions) {
-      const countForward = this.countInRow(x, y, direction);
+      var getForward = this.getInRow(x, y, direction);
+      var countForward = getForward.length;
       direction.toX *= -1;
       direction.toY *= -1;
-      const countBackward = this.countInRow(x, y, direction);
+      var getBackward = this.getInRow(x, y, direction);
+      var countBackward = getBackward.length;
       if (countForward + countBackward + 1 === this.nInARow) {
+        this.winLine = getBackward.concat(getForward);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isInWinLine(x, y) {
+    for (let i = 0; i < this.winLine.length; i++) {
+      if (this.winLine[i][0] === x && this.winLine[i][1] === y) {
         return true;
       }
     }
