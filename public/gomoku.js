@@ -2,7 +2,11 @@ class Gomoku {
   boardSize = 15;
   nInARow = 5;
   board = [];
-  players = { first: { id: null, timer: 10*60 }, second: { id: null, timer: 10*60 } };
+  maxTime = 10 * 60;
+  players = {
+    first: { id: null, timer: this.maxTime },
+    second: { id: null, timer: this.maxTime },
+  };
   activePlayer = null;
   winner = null;
   lastMove = [null, null];
@@ -20,11 +24,14 @@ class Gomoku {
   }
 
   countDown() {
+    var startedAt = Date.now();
     var counter = setInterval(() => {
       if (this.activePlayer === this.players.first.id) {
-        this.players.first.timer--;
+        this.players.first.timer =
+          this.maxTime - (Date.now() - startedAt) / 1000;
       } else {
-        this.players.second.timer--;
+        this.players.second.timer =
+          this.maxTime - (Date.now() - startedAt) / 1000;
       }
 
       if (this.players.first.timer <= 0) {
@@ -38,9 +45,7 @@ class Gomoku {
       if (this.winner !== null) {
         clearInterval(counter);
       }
-
-      console.log(this.players);
-    }, 1000);
+    }, 100);
   }
 
   setPlayers(firstPlayer, secondPlayer) {
@@ -141,6 +146,6 @@ class Gomoku {
   }
 
   formatTime(timer) {
-    return Math.floor(timer / 60) + ":" + (timer % 60);
+    return Math.floor(timer / 60) + ":" + Math.floor(timer % 60);
   }
 }

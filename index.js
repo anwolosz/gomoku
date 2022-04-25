@@ -63,14 +63,13 @@ io.on("connection", (socket) => {
           io.to(players[0]).emit("start", false);
           io.to(players[1]).emit("start", true);
           rooms[connectRoom].setPlayers(players[1], players[0]);
-          rooms[connectRoom].countDown();
         }
         if (rooms[connectRoom].players.second.id === null) {
           io.to(players[0]).emit("start", true);
           io.to(players[1]).emit("start", false);
           rooms[connectRoom].setPlayers(players[0], players[1]);
-          rooms[connectRoom].countDown();
         }
+        rooms[connectRoom].countDown();
       }
     } else {
       console.log("Room not exist");
