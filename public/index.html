@@ -12,6 +12,7 @@
   </head>
   <body>
     <div id="app">
+      <button @click="gomoku.stepTo(2)">Katt</button>
       <div id="setupBox" v-if="gomokuConnection.status === 'SETUP'">
         <input
           class="setupInput"
@@ -137,13 +138,14 @@
         <table class="notation">
           <tr v-for="(note, n) in gomoku.notation">
             <td>{{n % 2 == 0 ? Math.floor(n / 2) + "." : " " }}</td>
-            <td>
-              {{n % 2 == 0 ? gomoku.notation[n][0] + gomoku.notation[n][1] + ","
-              : "" }}
+            <td @click="gomoku.stepTo(n)">
+              {{n % 2 == 0 ? gomoku.formatNote(gomoku.notation[n][0],
+              gomoku.notation[n][1]) + "," : "" }}
             </td>
-            <td>
-              {{n % 2 == 0 && gomoku.notation[n+1] ? gomoku.notation[n+1][0]
-              +gomoku.notation[n+1][1] : "" }}
+            <td @click="gomoku.stepTo(n+1)">
+              {{n % 2 == 0 && gomoku.notation[n+1] ?
+              gomoku.formatNote(gomoku.notation[n+1][0] ,
+              gomoku.notation[n+1][1]) : "" }}
             </td>
           </tr>
         </table>

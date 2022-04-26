@@ -154,8 +154,45 @@ class Gomoku {
   }
 
   noteMove(x, y) {
+    // let column = String.fromCharCode("A".charCodeAt(0) + x);
+    // let row = this.boardSize - y;
+    // this.notation.push([column, row]);
+    this.notation.push([x, y]);
+  }
+
+  formatNote(x, y)
+  {
     let column = String.fromCharCode("A".charCodeAt(0) + x);
     let row = this.boardSize - y;
-    this.notation.push([column, row]);
+    return column+row;
+  }
+
+  stepTo(nthStep)
+  {
+    console.log(this.board);
+    for (var i = 0; i < this.boardSize; i++) {
+      for (var j = 0; j < this.boardSize; j++) {
+        for (var n = 0; n<=nthStep; n++)
+        {
+          console.log(i, j, this.notation[n]);
+          if (j === this.notation[n][0] && i === this.notation[n][1]) // TODO: out of bounds!!!
+          {
+            if (n % 2 == 0)
+            {
+              this.board[i][j] = this.players.first.id;
+            }
+            else {
+              this.board[i][j] = this.players.second.id;
+            }
+            break;
+          }
+          else {
+            this.board[i][j] = null;
+          }
+        }
+      }
+    }
+    this.lastMove = [this.notation[nthStep][1], this.notation[nthStep][0]] 
+    console.log(this.board);
   }
 }
