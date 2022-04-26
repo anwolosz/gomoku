@@ -172,20 +172,16 @@ class Gomoku {
   }
 
   stepTo(nthStep) {
-    for (var i = 0; i < this.boardSize; i++) {
-      for (var j = 0; j < this.boardSize; j++) {
-        for (var n = 0; n <= nthStep; n++) {
-          if (j === this.notation[n][0] && i === this.notation[n][1]) {
-            // TODO: out of bounds!!!
-            if (n % 2 == 0) {
-              this.board[i][j] = this.players.first.id;
-            } else {
-              this.board[i][j] = this.players.second.id;
-            }
-            break;
-          } else {
-            this.board[i][j] = null;
-          }
+    for (let n = 0; n < this.notation.length; n++) {
+      let j = this.notation[n][0];
+      let i = this.notation[n][1];
+      if (n > nthStep) {
+        this.board[i][j] = null;
+      } else {
+        if (n % 2 == 0) {
+          this.board[i][j] = this.players.first.id;
+        } else {
+          this.board[i][j] = this.players.second.id;
         }
       }
     }
