@@ -42,6 +42,9 @@ class GomokuConnection {
 
   receiveMove(gomoku) {
     socket.on("opponentMove", (x, y, player) => {
+      if (gomoku.isReplay()) {
+        gomoku.stepTo(gomoku.notation.length - 1);
+      }
       gomoku.move(x, y, this.opponent);
     });
   }
