@@ -63,13 +63,13 @@ class Gomoku {
       console.log("Active player: ", this.activePlayer);
       this.board[y][x] = this.activePlayer;
       this.lastMove = [y, x];
+      this.noteMove(x, y);
       if (this.isWin(x, y)) {
         this.winner = this.activePlayer;
         console.log(`End of Game. Winner is ${this.activePlayer}`);
         return true;
       }
       console.log(this.board[0]);
-      this.noteMove(x, y);
       this.switchPlayer();
       console.log("Next player: ", this.activePlayer);
       return true;

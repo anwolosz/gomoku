@@ -102,7 +102,7 @@
               @click="onClick(x, y)"
               class="tableField"
               :class="[y === gomoku.lastMove[0] && x === gomoku.lastMove[1] ? 'lastMove' : '',
-              gomoku.isInWinLine(x, y) ? 'inWinLine': '']"
+              gomoku.isInWinLine(x, y) && !gomoku.isReplay() ? 'inWinLine': '']"
             >
               <div
                 class="black stone"
