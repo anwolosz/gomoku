@@ -36,10 +36,12 @@ class Gomoku {
       }
 
       if (this.players.first.timer <= 0) {
+        this.players.first.timer = 0;
         this.winner = this.players.second.id;
         clearInterval(counter);
       }
       if (this.players.second.timer <= 0) {
+        this.players.second.timer = 0;
         this.winner = this.players.first.id;
         clearInterval(counter);
       }

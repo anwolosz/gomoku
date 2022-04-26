@@ -11,6 +11,7 @@ class Gomoku {
   winner = null;
   lastMove = [null, null];
   winLine = [];
+  notation = [];
 
   constructor(firstPlayer = null, secondPlayer = null) {
     for (var i = 0; i < this.boardSize; i++) {
@@ -66,6 +67,7 @@ class Gomoku {
         return true;
       }
       console.log(this.board[0]);
+      this.noteMove(x, y);
       this.switchPlayer();
       console.log("Next player: ", this.activePlayer);
       return true;
@@ -147,6 +149,12 @@ class Gomoku {
 
   formatTime(timer) {
     return Math.floor(timer / 60) + ":" + Math.floor(timer % 60);
+  }
+
+  noteMove(x, y) {
+    let column = String.fromCharCode("A".charCodeAt(0) + x);
+    let row = this.boardSize - y;
+    this.notation.push([column, row]);
   }
 }
 

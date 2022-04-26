@@ -204,13 +204,14 @@ body {
 }
 
 .notation {
+  display: flex;
+  flex-direction: column-reverse;
   background-color: rgb(246, 248, 255);
   border-collapse: collapse;
   margin: auto;
   width: 300px;
   height: 100px;
   overflow-y: scroll;
-  display: block;
 }
 
 .notation td {

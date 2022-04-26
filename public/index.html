@@ -138,8 +138,8 @@
           <tr v-for="(note, n) in gomoku.notation">
             <td>{{n % 2 == 0 ? Math.floor(n / 2) + "." : " " }}</td>
             <td>
-              {{n % 2 == 0 ? gomoku.notation[n][0] + gomoku.notation[n][1] + ",
-              ": "" }}
+              {{n % 2 == 0 ? gomoku.notation[n][0] + gomoku.notation[n][1] + ","
+              : "" }}
             </td>
             <td>
               {{n % 2 == 0 && gomoku.notation[n+1] ? gomoku.notation[n+1][0]
