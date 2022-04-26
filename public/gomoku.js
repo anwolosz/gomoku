@@ -172,11 +172,9 @@ class Gomoku {
   }
 
   stepTo(nthStep) {
-    console.log(nthStep);
     for (var i = 0; i < this.boardSize; i++) {
       for (var j = 0; j < this.boardSize; j++) {
         for (var n = 0; n <= nthStep; n++) {
-          console.log(i, j, this.notation[n]);
           if (j === this.notation[n][0] && i === this.notation[n][1]) {
             // TODO: out of bounds!!!
             if (n % 2 == 0) {
@@ -192,6 +190,5 @@ class Gomoku {
       }
     }
     this.lastMove = [this.notation[nthStep][1], this.notation[nthStep][0]];
-    console.log(this.board);
   }
 }

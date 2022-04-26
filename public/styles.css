@@ -218,3 +218,7 @@ body {
   width: 100px;
   text-align: center;
 }
+
+.selectedMove {
+  background-color: #3844e5;
+}
