@@ -33,8 +33,10 @@ class GomokuConnection {
   }
 
   sendMove(gomoku, x, y) {
-    if (gomoku.move(x, y, this.userId)) {
-      socket.emit("move", this.roomName, x, y);
+    if (!gomoku.isReplay()) {
+      if (gomoku.move(x, y, this.userId)) {
+        socket.emit("move", this.roomName, x, y);
+      }
     }
   }
 

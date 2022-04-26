@@ -97,6 +97,14 @@ class Gomoku {
     );
   }
 
+  isReplay() {
+    return !(
+      this.notation.length === 0 ||
+      (this.lastMove[0] === this.notation[this.notation.length - 1][1] &&
+        this.lastMove[1] === this.notation[this.notation.length - 1][0])
+    );
+  }
+
   isOutOfBounds(x, y) {
     return x >= this.boardSize || y >= this.boardSize || x < 0 || y < 0;
   }
@@ -154,45 +162,36 @@ class Gomoku {
   }
 
   noteMove(x, y) {
-    // let column = String.fromCharCode("A".charCodeAt(0) + x);
-    // let row = this.boardSize - y;
-    // this.notation.push([column, row]);
     this.notation.push([x, y]);
   }
 
-  formatNote(x, y)
-  {
+  formatNote(x, y) {
     let column = String.fromCharCode("A".charCodeAt(0) + x);
     let row = this.boardSize - y;
-    return column+row;
+    return column + row;
   }
 
-  stepTo(nthStep)
-  {
-    console.log(this.board);
+  stepTo(nthStep) {
+    console.log(nthStep);
     for (var i = 0; i < this.boardSize; i++) {
       for (var j = 0; j < this.boardSize; j++) {
-        for (var n = 0; n<=nthStep; n++)
-        {
+        for (var n = 0; n <= nthStep; n++) {
           console.log(i, j, this.notation[n]);
-          if (j === this.notation[n][0] && i === this.notation[n][1]) // TODO: out of bounds!!!
-          {
-            if (n % 2 == 0)
-            {
+          if (j === this.notation[n][0] && i === this.notation[n][1]) {
+            // TODO: out of bounds!!!
+            if (n % 2 == 0) {
               this.board[i][j] = this.players.first.id;
-            }
-            else {
+            } else {
               this.board[i][j] = this.players.second.id;
             }
             break;
-          }
-          else {
+          } else {
             this.board[i][j] = null;
           }
         }
       }
     }
-    this.lastMove = [this.notation[nthStep][1], this.notation[nthStep][0]] 
+    this.lastMove = [this.notation[nthStep][1], this.notation[nthStep][0]];
     console.log(this.board);
   }
 }
