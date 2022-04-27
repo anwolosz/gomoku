@@ -19,9 +19,9 @@ body {
 }
 
 .tableField {
-  /* width: 40px;
-  height: 40px;
-  min-width: 40px; */
+  /* width: 36px;
+  height: 36px;
+  min-width: 36px; */
   width: 20px;
   height: 20px;
   min-width: 20px;
@@ -153,14 +153,13 @@ body {
 }
 
 .playerPanel {
-  margin: auto;
+  /* margin: auto; */
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: rgb(246, 248, 255);
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
-  width: 600px;
 }
 
 .playerPanel .stone {
@@ -173,13 +172,13 @@ body {
 
 .playerPanel p {
   margin: 10px;
-  font-size: 20px;
+  font-size: 1.2em;
   display: inline-block;
 }
 
 .roomName {
   margin: auto;
-  width: 600px;
+
   font-size: 2.5em;
 }
 
@@ -221,4 +220,58 @@ body {
 
 .selectedMove {
   background-color: #3844e5;
+}
+
+.grid {
+  display: grid;
+}
+
+.youBlock {
+  grid-area: youBlock;
+}
+.boardBlock {
+  grid-area: boardBlock;
+}
+.opponentBlock {
+  grid-area: opponentBlock;
+}
+.replayBlock {
+  grid-area: replayBlock;
+}
+.titleBlock {
+  grid-area: titleBlock;
+}
+
+.grid {
+  grid-auto-columns: 1fr;
+  grid-template-areas:
+    "titleBlock"
+    "youBlock"
+    "boardBlock"
+    "opponentBlock"
+    "replayBlock";
+}
+
+@media screen and (min-width: 992px) {
+  .grid {
+    grid-auto-columns: 2fr 1fr;
+    grid-template-areas:
+      "titleBlock empty"
+      "boardBlock youBlock"
+      "boardBlock replayBlock"
+      "boardBlock opponentBlock";
+  }
+
+  .board {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  .tableField {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+  .roomName {
+    text-align: right;
+  }
 }

@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
+    <link href="css/bootstrap-grid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
     <title>Gomoku</title>
     <script src="/socket.io/socket.io.js"></script>
     <!-- TODO: Replace CDN -->
@@ -55,105 +56,126 @@
         <p>{{gomokuConnection.errorMessage}}</p>
       </div>
 
-      <div
-        v-if="gomokuConnection.status === 'PLAY' || gomokuConnection.status === 'WAITING'"
-      >
-        <div class="roomName">{{gomokuConnection.roomName}}</div>
-        <div class="playerPanel">
+      <div class="container grid">
+        <div class="titleBlock">
           <div
-            :class="gomokuConnection.userId === gomoku.players.first.id || gomokuConnection.firstPlayer === 'CREATOR' ? 'black stone' : 'white stone'"
-          ></div>
-          <p>
-            You
-            <b>
-              ( {{gomokuConnection.userId === gomoku.players.first.id ?
-              gomoku.formatTime(gomoku.players.first.timer) :
-              gomoku.formatTime(gomoku.players.second.timer)}} )
-            </b>
-          </p>
-          <br />
-          <p>
-            <i v-if="gomokuConnection.status === 'WAITING'">
-              Waiting for another player. <br />
-              Invite someone with the room name:
-              <b>{{gomokuConnection.roomName}}</b>
-            </i>
-            <i
-              v-if="gomokuConnection.status === 'PLAY' && gomoku.winner === null"
-            >
-              {{gomoku.activePlayer === gomokuConnection.userId ? "Your turn." :
-              "Waiting for opponent."}}
-            </i>
-            <i v-if="gomoku.winner === gomokuConnection.userId">You won!</i>
-            <i v-if="gomoku.winner === gomokuConnection.opponent">
-              You lose...
-            </i>
-          </p>
+            v-if="gomokuConnection.status === 'PLAY' || gomokuConnection.status === 'WAITING'"
+            class="roomName"
+          >
+            {{gomokuConnection.roomName}}
+          </div>
         </div>
-      </div>
-      <div v-if="gomokuConnection.status === 'PLAY'">
-        <table v-if="gomoku !== {}" class="board">
-          <tr v-for="(row, y) in gomoku.board">
-            <td class="tableIndex tableIndexColumn">
-              {{gomoku.boardSize - y}}
-            </td>
-            <td
-              v-for="(cell, x) in row"
-              @click="onClick(x, y)"
-              class="tableField"
-              :class="[y === gomoku.lastMove[0] && x === gomoku.lastMove[1] ? 'lastMove' : '',
-              gomoku.isInWinLine(x, y) && !gomoku.isReplay() ? 'inWinLine': '']"
-            >
-              <div
-                class="black stone"
-                v-if="gomoku.board[y][x] === gomoku.players.first.id"
-              ></div>
-              <div
-                class="white stone"
-                v-if="gomoku.board[y][x] === gomoku.players.second.id"
-              ></div>
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="tableIndex tableIndexRow" v-for="n in gomoku.boardSize">
-              {{String.fromCharCode("A".charCodeAt(0) + n - 1)}}
-            </td>
-          </tr>
-        </table>
-        <div class="playerPanel">
+        <div class="youBlock">
           <div
-            :class="gomokuConnection.userId === gomoku.players.first.id ? 'white stone' : 'black stone'"
-          ></div>
-          <p>
-            Opponent
-            <b>
-              ( {{gomokuConnection.userId !== gomoku.players.first.id ?
-              gomoku.formatTime(gomoku.players.first.timer) :
-              gomoku.formatTime(gomoku.players.second.timer)}} )
-            </b>
-          </p>
+            v-if="gomokuConnection.status === 'PLAY' || gomokuConnection.status === 'WAITING'"
+            class="playerPanel"
+          >
+            <div
+              :class="gomokuConnection.userId === gomoku.players.first.id || gomokuConnection.firstPlayer === 'CREATOR' ? 'black stone' : 'white stone'"
+            ></div>
+            <p>
+              You
+              <b>
+                ( {{gomokuConnection.userId === gomoku.players.first.id ?
+                gomoku.formatTime(gomoku.players.first.timer) :
+                gomoku.formatTime(gomoku.players.second.timer)}} )
+              </b>
+            </p>
+            <br />
+            <p>
+              <i v-if="gomokuConnection.status === 'WAITING'">
+                Waiting for another player. <br />
+                Invite someone with the room name:
+                <b>{{gomokuConnection.roomName}}</b>
+              </i>
+              <i
+                v-if="gomokuConnection.status === 'PLAY' && gomoku.winner === null"
+              >
+                {{gomoku.activePlayer === gomokuConnection.userId ? "Your turn."
+                : "Waiting for opponent."}}
+              </i>
+              <i v-if="gomoku.winner === gomokuConnection.userId">You won!</i>
+              <i v-if="gomoku.winner === gomokuConnection.opponent">
+                You lose...
+              </i>
+            </p>
+          </div>
         </div>
-        <table class="notation">
-          <tr v-for="(note, n) in gomoku.notation">
-            <td>{{n % 2 == 0 ? Math.floor(n / 2) + "." : " " }}</td>
-            <td
-              @click="gomoku.stepTo(n)"
-              :class="n%2 == 0 && gomoku.lastMove[0] === note[1] && gomoku.lastMove[1] === note[0] ? 'selectedMove': ''"
-            >
-              {{n % 2 == 0 ? gomoku.formatNote(gomoku.notation[n][0],
-              gomoku.notation[n][1]) + "," : "" }}
-            </td>
-            <td
-              @click="gomoku.stepTo(n+1)"
-              :class="n%2 == 0 && gomoku.notation[n+1] && gomoku.lastMove[0] === gomoku.notation[n+1][1] && gomoku.lastMove[1] === gomoku.notation[n+1][0] ? 'selectedMove': ''"
-            >
-              {{n % 2 == 0 && gomoku.notation[n+1] ?
-              gomoku.formatNote(gomoku.notation[n+1][0] ,
-              gomoku.notation[n+1][1]) : "" }}
-            </td>
-          </tr>
-        </table>
+        <div class="boardBlock">
+          <table
+            v-if="gomokuConnection.status === 'PLAY' || gomokuConnection.status === 'WAITING'"
+            v-if="gomoku !== {}"
+            class="board"
+          >
+            <tr v-for="(row, y) in gomoku.board">
+              <td class="tableIndex tableIndexColumn">
+                {{gomoku.boardSize - y}}
+              </td>
+              <td
+                v-for="(cell, x) in row"
+                @click="onClick(x, y)"
+                class="tableField"
+                :class="[y === gomoku.lastMove[0] && x === gomoku.lastMove[1] ? 'lastMove' : '',
+                  gomoku.isInWinLine(x, y) && !gomoku.isReplay() ? 'inWinLine': '']"
+              >
+                <div
+                  class="black stone"
+                  v-if="gomoku.board[y][x] === gomoku.players.first.id && gomokuConnection.status === 'PLAY'"
+                ></div>
+                <div
+                  class="white stone"
+                  v-if="gomoku.board[y][x] === gomoku.players.second.id && gomokuConnection.status === 'PLAY'"
+                ></div>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td
+                class="tableIndex tableIndexRow"
+                v-for="n in gomoku.boardSize"
+              >
+                {{String.fromCharCode("A".charCodeAt(0) + n - 1)}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="opponentBlock">
+          <div v-if="gomokuConnection.status === 'PLAY'" class="playerPanel">
+            <div
+              :class="gomokuConnection.userId === gomoku.players.first.id ? 'white stone' : 'black stone'"
+            ></div>
+            <p>
+              Opponent
+              <b>
+                ( {{gomokuConnection.userId !== gomoku.players.first.id ?
+                gomoku.formatTime(gomoku.players.first.timer) :
+                gomoku.formatTime(gomoku.players.second.timer)}} )
+              </b>
+            </p>
+          </div>
+        </div>
+        <div class="replayBlock">
+          <table v-if="gomokuConnection.status === 'PLAY'" class="notation">
+            <tr v-for="(note, n) in gomoku.notation">
+              <td>{{n % 2 == 0 ? Math.floor(n / 2) + "." : " " }}</td>
+              <td
+                @click="gomoku.stepTo(n)"
+                :class="n%2 == 0 && gomoku.lastMove[0] === note[1] && gomoku.lastMove[1] === note[0] ? 'selectedMove': ''"
+              >
+                {{n % 2 == 0 ? gomoku.formatNote(gomoku.notation[n][0],
+                gomoku.notation[n][1]) + "," : "" }}
+              </td>
+              <td
+                @click="gomoku.stepTo(n+1)"
+                :class="n%2 == 0 && gomoku.notation[n+1] && gomoku.lastMove[0] === gomoku.notation[n+1][1] && gomoku.lastMove[1] === gomoku.notation[n+1][0] ? 'selectedMove': ''"
+              >
+                {{n % 2 == 0 && gomoku.notation[n+1] ?
+                gomoku.formatNote(gomoku.notation[n+1][0] ,
+                gomoku.notation[n+1][1]) : "" }}
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
 
