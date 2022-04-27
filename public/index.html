@@ -108,7 +108,7 @@
             class="board"
           >
             <tr v-for="(row, y) in gomoku.board">
-              <td class="tableIndex tableIndexColumn">
+              <td class="tableIndex tableIndexColumn d-none d-lg-table-cell">
                 {{gomoku.boardSize - y}}
               </td>
               <td
@@ -129,9 +129,9 @@
               </td>
             </tr>
             <tr>
-              <td></td>
+              <td class="d-none d-lg-table-cell"></td>
               <td
-                class="tableIndex tableIndexRow"
+                class="tableIndex tableIndexRow d-none d-lg-table-cell"
                 v-for="n in gomoku.boardSize"
               >
                 {{String.fromCharCode("A".charCodeAt(0) + n - 1)}}
@@ -155,26 +155,30 @@
           </div>
         </div>
         <div class="replayBlock">
-          <table v-if="gomokuConnection.status === 'PLAY'" class="notation">
-            <tr v-for="(note, n) in gomoku.notation">
-              <td>{{n % 2 == 0 ? Math.floor(n / 2) + "." : " " }}</td>
-              <td
-                @click="gomoku.stepTo(n)"
-                :class="n%2 == 0 && gomoku.lastMove[0] === note[1] && gomoku.lastMove[1] === note[0] ? 'selectedMove': ''"
-              >
-                {{n % 2 == 0 ? gomoku.formatNote(gomoku.notation[n][0],
-                gomoku.notation[n][1]) + "," : "" }}
-              </td>
-              <td
-                @click="gomoku.stepTo(n+1)"
-                :class="n%2 == 0 && gomoku.notation[n+1] && gomoku.lastMove[0] === gomoku.notation[n+1][1] && gomoku.lastMove[1] === gomoku.notation[n+1][0] ? 'selectedMove': ''"
-              >
-                {{n % 2 == 0 && gomoku.notation[n+1] ?
-                gomoku.formatNote(gomoku.notation[n+1][0] ,
-                gomoku.notation[n+1][1]) : "" }}
-              </td>
-            </tr>
-          </table>
+          <div v-if="gomokuConnection.status === 'PLAY'" class="replay">
+            <div class="notation">
+              <table>
+                <tr v-for="(note, n) in gomoku.notation">
+                  <td>{{n % 2 == 0 ? Math.floor(n / 2) + "." : "" }}</td>
+                  <td
+                    @click="gomoku.stepTo(n)"
+                    :class="n%2 == 0 && gomoku.lastMove[0] === note[1] && gomoku.lastMove[1] === note[0] ? 'selectedMove': ''"
+                  >
+                    {{n % 2 == 0 ? gomoku.formatNote(gomoku.notation[n][0],
+                    gomoku.notation[n][1]) + "," : "" }}
+                  </td>
+                  <td
+                    @click="gomoku.stepTo(n+1)"
+                    :class="n%2 == 0 && gomoku.notation[n+1] && gomoku.lastMove[0] === gomoku.notation[n+1][1] && gomoku.lastMove[1] === gomoku.notation[n+1][0] ? 'selectedMove': ''"
+                  >
+                    {{n % 2 == 0 && gomoku.notation[n+1] ?
+                    gomoku.formatNote(gomoku.notation[n+1][0] ,
+                    gomoku.notation[n+1][1]) : "" }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

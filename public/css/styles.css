@@ -202,6 +202,16 @@ body {
   background-color: #cecaf4;
 }
 
+.notation table {
+  cursor: default;
+  border-collapse: collapse;
+}
+
+.notation td:not(:first-of-type):hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
 .notation {
   display: flex;
   flex-direction: column-reverse;
@@ -214,8 +224,18 @@ body {
 }
 
 .notation td {
+  border-bottom: 1px solid #e6e7e8;
+  border-right: 1px solid #e6e7e8;
   width: 100px;
   text-align: center;
+}
+
+.notation td:first-child {
+  color: #31373d;
+}
+
+.notation td:empty {
+  display: none;
 }
 
 .selectedMove {
@@ -252,6 +272,14 @@ body {
     "replayBlock";
 }
 
+@media screen and (min-width: 576px) {
+  .tableField {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+}
+
 @media screen and (min-width: 992px) {
   .grid {
     grid-auto-columns: 2fr 1fr;
@@ -272,6 +300,7 @@ body {
     min-width: 36px;
   }
   .roomName {
+    margin-right: 10px;
     text-align: right;
   }
 }
