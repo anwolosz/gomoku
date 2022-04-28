@@ -22,9 +22,9 @@ body {
   /* width: 36px;
   height: 36px;
   min-width: 36px; */
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
+  width: 25px;
+  height: 25px;
+  min-width: 25px;
   text-align: center;
   font-size: 30px;
   background: linear-gradient(
@@ -105,10 +105,8 @@ body {
   outline: none;
   border: 2px dotted #3844e5;
   transition: 0.2s;
-  margin-top: 2px;
-  margin-bottom: 2px;
   border-radius: 5px;
-  width: 300px;
+  width:100%;
   font-size: 30px;
   background-color: rgb(246, 248, 255);
 }
@@ -125,7 +123,7 @@ body {
   /* opacity: 0.6; */
   transition: 0.2s;
   border-radius: 5px;
-  width: 50%;
+  width: 100%;
   padding: 10px;
   font-size: large;
   color: white;
@@ -142,9 +140,8 @@ body {
 }
 
 .setupSwitch {
-  display: inline-block;
   border: 2px solid rgba(0, 0, 0, 0.2);
-  width: 32%;
+  width: 100%;
   background-color: #ff9100;
 }
 
@@ -274,9 +271,9 @@ body {
 
 @media screen and (min-width: 576px) {
   .tableField {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
   }
 }
 

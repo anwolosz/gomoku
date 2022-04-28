@@ -14,38 +14,60 @@
   <body>
     <div id="app">
       <div id="setupBox" v-if="gomokuConnection.status === 'SETUP'">
-        <input
-          class="setupInput"
-          type="text"
-          name="createRoom"
-          v-model="gomokuConnection.roomName"
-        />
-        <br />
-        <button class="setupButton" @click="onCreateRoom()">Create Room</button>
-        <button class="setupButton" @click="onConnectRoom()">
-          Connect Room</button
-        ><br />
-        <div
-          class="setupSwitch"
-          :class="gomokuConnection.firstPlayer === 'CREATOR' ? 'selected' : ''"
-          @click="gomokuConnection.firstPlayer = 'CREATOR'"
-        >
-          <div class="black stone"></div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <input
+                class="setupInput"
+                type="text"
+                name="createRoom"
+                v-model="gomokuConnection.roomName"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <button class="setupButton" @click="onCreateRoom()">
+                Create Room
+              </button>
+            </div>
+            <div class="col-6">
+              <button class="setupButton" @click="onConnectRoom()">
+                Connect Room
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <div
+                class="setupSwitch"
+                :class="gomokuConnection.firstPlayer === 'CREATOR' ? 'selected' : ''"
+                @click="gomokuConnection.firstPlayer = 'CREATOR'"
+              >
+                <div class="black stone"></div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div
+                class="setupSwitch"
+                :class="gomokuConnection.firstPlayer === 'RANDOM' ? 'selected' : ''"
+                @click="gomokuConnection.firstPlayer = 'RANDOM'"
+              >
+                <div class="multicolor stone"></div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div
+                class="setupSwitch"
+                :class="gomokuConnection.firstPlayer === 'OPPONENT' ? 'selected' : ''"
+                @click="gomokuConnection.firstPlayer = 'OPPONENT'"
+              >
+                <div class="white stone"></div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div
-          class="setupSwitch"
-          :class="gomokuConnection.firstPlayer === 'RANDOM' ? 'selected' : ''"
-          @click="gomokuConnection.firstPlayer = 'RANDOM'"
-        >
-          <div class="multicolor stone"></div>
-        </div>
-        <div
-          class="setupSwitch"
-          :class="gomokuConnection.firstPlayer === 'OPPONENT' ? 'selected' : ''"
-          @click="gomokuConnection.firstPlayer = 'OPPONENT'"
-        >
-          <div class="white stone"></div>
-        </div>
+
         <input
           type="number"
           class="setupTimer"
