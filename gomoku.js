@@ -2,7 +2,7 @@ class Gomoku {
   boardSize = 15;
   nInARow = 5;
   board = [];
-  maxTime = 10 * 60;
+  maxTime = 10 * 1;
   players = {
     first: { id: null, timer: this.maxTime },
     second: { id: null, timer: this.maxTime },
@@ -29,23 +29,26 @@ class Gomoku {
     var counter = setInterval(() => {
       if (this.activePlayer === this.players.first.id) {
         this.players.first.timer =
-          this.maxTime - (Date.now() - startedAt) / 1000;
+        this.players.first.timer - (Date.now() - startedAt) /1000;
       } else {
         this.players.second.timer =
-          this.maxTime - (Date.now() - startedAt) / 1000;
+        this.players.second.timer -(Date.now() - startedAt) / 1000;
       }
 
       if (this.players.first.timer <= 0) {
+        this.players.first.timer = 0;
         this.winner = this.players.second.id;
         clearInterval(counter);
       }
       if (this.players.second.timer <= 0) {
+        this.players.second.timer = 0;
         this.winner = this.players.first.id;
         clearInterval(counter);
       }
       if (this.winner !== null) {
         clearInterval(counter);
       }
+      startedAt = Date.now()
     }, 100);
   }
 
