@@ -2,7 +2,7 @@ class Gomoku {
   boardSize = 15;
   nInARow = 5;
   board = [];
-  maxTime = 10 * 1;
+  maxTime = 10 * 60;
   players = {
     first: { id: null, timer: this.maxTime },
     second: { id: null, timer: this.maxTime },
